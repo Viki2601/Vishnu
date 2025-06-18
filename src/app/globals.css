@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+:root {
+  --background: linear-gradient(to bottom right, #03070e, #122545);
+  /* Dark gradient */
+  --foreground: #ededed;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --background: linear-gradient(to bottom right, #f0f9ff, #e0f2fe);
+    /* Light gradient */
+    --foreground: #171717;
+  }
+}
+
+body {
+  background: var(--background);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: var(--foreground);
+}
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  
+.scroll-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scroll-hide::-webkit-scrollbar {
+  display: none;
+}
