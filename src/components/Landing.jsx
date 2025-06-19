@@ -46,7 +46,7 @@ export default function Landing() {
                     initial={{ opacity: 0, x: -50 }}
                     animate={animate ? { opacity: 1, x: 0 } : {}}
                     transition={{ duration: 0.6 }}
-                    className="text-stone-300 text-4xl md:text-6xl uppercase font-extrabold leading-tight text-center md:text-right"
+                    className="text-stone-300 text-5xl md:text-6xl uppercase font-extrabold leading-tight text-center md:text-right"
                 >
                     <span className="tracking-tight italic text-cyan-900 stroke-1 stroke-cyan-500">Vishnu{" "}</span>
                     <span className="tracking-tighter italic text-cyan-900/50" style={{ WebkitTextStroke: '1px #0e7490', WebkitTextFillColor: 'transparent', }}>
@@ -57,7 +57,7 @@ export default function Landing() {
                     initial={{ opacity: 0, x: 50 }}
                     animate={animate ? { opacity: 1, x: 0 } : {}}
                     transition={{ duration: 0.6, delay: 0.3 }}
-                    className="text-stone-400 uppercase text-xl md:text-3xl lg:text-5xl font-medium text-center lg:text-right tracking-tighter italic" style={{ WebkitTextStroke: '1px', WebkitTextFillColor: 'transparent', }}
+                    className="text-stone-400 uppercase text-3xl lg:text-5xl font-medium text-center lg:text-right tracking-tighter italic" style={{ WebkitTextStroke: '1px', WebkitTextFillColor: 'transparent', }}
                 >
                     UI Developer
                 </motion.h2>

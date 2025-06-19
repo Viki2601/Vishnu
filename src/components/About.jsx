@@ -65,12 +65,12 @@ export default function About() {
             <div id="scrolling-background" className={`relative min-h-screen flex flex-col items-center justify-center`}>
 
                 <div className='relative z-10 p-4 lg:p-10'>
-                    <h1 className='bg-clip-text font-bold tracking-tighter text-transparent bg-gradient-to-r from-stone-300 to-stone-800 text-center text-lg lg:text-4xl'>Get to know more</h1>
-                    <h1 className='bg-clip-text font-extrabold tracking-tighter text-transparent bg-gradient-to-r from-stone-300 to-stone-800 text-2xl lg:text-7xl text-center'>About</h1>
+                    <h1 className='bg-clip-text font-bold tracking-tighter text-transparent bg-gradient-to-r from-stone-300 to-stone-800 text-center text-4xl'>Get to know more</h1>
+                    <h1 className='bg-clip-text font-extrabold tracking-tighter text-transparent bg-gradient-to-r from-stone-300 to-stone-800 text-7xl text-center'>About</h1>
                 </div>
                 <h1 className='relative z-10 mb-40 text-stone-300 font-montserrat max-w-4xl text-center'>
-                    <span className='bg-clip-text text-transparent italic tracking-widest bg-gradient-to-r from-stone-300 to-stone-800 text-lg lg:text-xl'>I am Vishnu, an UI Developer. </span>
-                    <span className='bg-clip-text text-transparent italic tracking-widest bg-gradient-to-r from-stone-300 to-stone-500'>A Mechanical Engineering diploma graduate who transitioned into the field of web development. After completing a Full Stack Web Development course at QSpiders Institute, and further expanded skill set by independently learning the UI/UX designing and MERN stack (MongoDB, Express.js, React.js, Node.js).</span>
+                    <span className='bg-clip-text text-transparent italic tracking-widest bg-gradient-to-r from-stone-300 to-stone-800 text-xl'>I am Vishnu, an UI Developer. </span>
+                    <span className='bg-clip-text text-transparent italic tracking-widest bg-gradient-to-r from-stone-300 to-stone-500 text-lg'>A Mechanical Engineering diploma graduate who transitioned into the field of web development. After completing a Full Stack Web Development course at QSpiders Institute, and further expanded skill set by independently learning the UI/UX designing and MERN stack (MongoDB, Express.js, React.js, Node.js).</span>
                 </h1>
             </div>
         </section >

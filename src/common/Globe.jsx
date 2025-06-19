@@ -2,8 +2,6 @@
 
 import * as THREE from 'three';
 import { useRef, useEffect } from 'react';
-import Astroids from '@/assets/img/Astroids.png';
-import Image from 'next/image';
 
 export default function Globe() {
     const mountRef = useRef(null);
@@ -48,7 +46,6 @@ export default function Globe() {
         };
     }, []);
 
-    return <div ref={mountRef} className="absolute w-full h-[400px] bg-transparent">
-        <Image src={Astroids} alt='Astroids' width={150} height={150} className='absolute top-0 left-2/3' />
+    return <div ref={mountRef} className="absolute top-60 left-36 w-full h-[400px] bg-transparent overflow-hidden z-0">
     </div>;
 }

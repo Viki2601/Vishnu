@@ -33,7 +33,7 @@ export default function Certificates() {
         <section className="relative min-h-screen flex items-center w-full font-urbanist py-16 px-4 sm:px-6 lg:px-10">
             <div className="w-full grid md:grid-cols-2 gap-10 items-center">
                 <div>
-                    <h1 className='bg-clip-text font-extrabold tracking-tighter text-transparent bg-gradient-to-r from-stone-300 to-stone-800 text-2xl lg:text-7xl'>Certificates</h1>
+                    <h1 className='bg-clip-text font-extrabold tracking-tighter text-transparent bg-gradient-to-r from-stone-300 to-stone-800 text-7xl'>Certificates</h1>
                 </div>
 
                 {/* Image Cards */}
@@ -53,9 +53,9 @@ export default function Certificates() {
                             >
                                 <Image src={cert.certi_img} alt={cert.title} width={300} height={200} className="rounded-xl object-cover" />
                                 <div className="flex flex-col justify-center">
-                                    <h3 className="text-2xl sm:text-3xl font-bold text-stone-300">{cert.title}</h3>
-                                    <p className="text-sm text-gray-600 mt-1">{cert.Technologies_Learned}</p>
-                                    <p className="text-sm text-gray-500 mt-1">By {cert.institue}</p>
+                                    <h3 className="text-3xl font-bold text-stone-300">{cert.title}</h3>
+                                    <p className="text-lg text-gray-600 mt-1">{cert.Technologies_Learned}</p>
+                                    <p className="text-lg text-gray-500 mt-1">By {cert.institue}</p>
                                 </div>
                             </motion.div>
                         ))}

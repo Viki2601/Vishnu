@@ -63,7 +63,7 @@ export default function Project() {
 
     return (
         <section ref={containerRef} className="w-full">
-            <h1 className='p-10 bg-clip-text font-extrabold tracking-tighter text-transparent bg-gradient-to-r from-stone-300 to-stone-800 text-2xl lg:text-7xl'>
+            <h1 className='p-10 bg-clip-text font-extrabold tracking-tighter text-transparent bg-gradient-to-r from-stone-300 to-stone-800 text-7xl'>
                 Projects
             </h1>
 

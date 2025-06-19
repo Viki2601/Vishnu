@@ -18,7 +18,7 @@ export default function Timeline() {
         },
         {
             title: 'Full Stack Web Development Training',
-            institution: 'QSpiders Technology',
+            company: 'QSpiders Technology',
             date: 'January 2023 - December 2023',
             description: `I have successfully completed a comprehensive Full Stack Web Development course at QSpiders Institute! This journey has been incredibly rewarding, providing me with the skills and knowledge to build dynamic and responsive web applications from scratch.`,
         },
@@ -36,7 +36,7 @@ export default function Timeline() {
         },
         {
             title: 'Diploma in Mechanical Engineering',
-            institution: 'Murugappa Polytechnic College',
+            company: 'Murugappa Polytechnic College',
             date: 'July 2017 - August 2020',
             description: `Graduated with a Diploma in Mechanical Engineering with First-Class Distinction. Gained strong foundational knowledge in thermodynamics, fluid mechanics, and machine design, along with hands-on skills in technical drawing and problem-solving.`,
         },
@@ -47,7 +47,7 @@ export default function Timeline() {
             <div className="flex flex-col-reverse md:flex-row w-full">
                 {/* Left Sticky Section */}
                 <div className="w-full md:w-2/5 h-[56vh] md:h-screen flex flex-col items-center justify-center space-y-5 sticky bottom-0 md:top-0 rounded-t-full md:rounded-t-none md:rounded-r-full p-6 bg-gradient-to-t lg:bg-gradient-to-l from-[#0f0c29] via-[#24243e] to-[#303b63]">
-                    <h1 className='bg-clip-text font-extrabold tracking-tighter text-transparent bg-gradient-to-r from-stone-300 to-stone-800 text-2xl lg:text-7xl'>Education & Experience</h1>
+                    <h1 className='bg-clip-text font-extrabold tracking-tighter text-transparent bg-gradient-to-r from-stone-300 to-stone-800 text-6xl lg:text-7xl'>Education & Experience</h1>
                 </div>
 
                 <StarsAndMeteors />
@@ -59,13 +59,13 @@ export default function Timeline() {
                             key={index}
                             className="flex flex-col justify-center items-center h-[70vh] space-y-4 text-center"
                         >
-                            <div className="bg-clip-text font-extrabold tracking-tighter text-transparent bg-gradient-to-r from-stone-300 to-stone-800 text-2xl lg:text-5xl">
+                            <div className="bg-clip-text font-extrabold tracking-tighter text-transparent bg-gradient-to-r from-stone-300 to-stone-800 text-4xl lg:text-5xl">
                                 {item.title}
                             </div>
-                            <p className="bg-clip-text text-transparent bg-gradient-to-r from-stone-300 to-stone-800 font-semibold text-xl">
-                                {item.company} - {item.date}
+                            <p className="bg-clip-text text-transparent bg-gradient-to-r from-stone-300 to-stone-800 font-semibold text-2xl">
+                                {item.company} / {item.date}
                             </p>
-                            <p className="bg-clip-text text-transparent italic tracking-widest bg-gradient-to-r from-stone-300 to-stone-500 text-lg max-w-3xl">
+                            <p className="bg-clip-text text-transparent italic tracking-widest bg-gradient-to-r from-stone-300 to-stone-500 text-xl max-w-3xl">
                                 {item.description}
                             </p>
                         </div>
