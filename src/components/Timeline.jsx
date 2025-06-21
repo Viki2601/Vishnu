@@ -46,8 +46,8 @@ export default function Timeline() {
         <div className='relative z-10 w-full'>
             <div className="flex flex-col-reverse md:flex-row w-full">
                 {/* Left Sticky Section */}
-                <div className="w-full md:w-2/5 h-[56vh] md:h-screen flex flex-col items-center justify-center space-y-5 sticky bottom-0 md:top-0 rounded-t-full md:rounded-t-none md:rounded-r-full p-6 bg-gradient-to-t lg:bg-gradient-to-l from-[#0f0c29] via-[#24243e] to-[#303b63]">
-                    <h1 className='bg-clip-text font-extrabold tracking-tighter text-transparent bg-gradient-to-r from-stone-300 to-stone-800 text-6xl lg:text-7xl'>Education & Experience</h1>
+                <div className="w-full md:w-2/5 h-[56vh] md:h-screen flex flex-col items-center justify-center space-y-5 sticky bottom-0 md:top-0 rounded-t-full md:rounded-t-none md:rounded-r-full p-6 backdrop-blur-lg bg-gradient-to-t lg:bg-gradient-to-l from-[#0f0c29]/50 via-[#24243e]/50 to-[#303b63]/40">
+                    <h1 className='bg-clip-text text-center font-extrabold tracking-tighter text-transparent bg-gradient-to-r from-stone-300 to-stone-800 text-6xl lg:text-7xl'>Education & Experience</h1>
                 </div>
 
                 <StarsAndMeteors />

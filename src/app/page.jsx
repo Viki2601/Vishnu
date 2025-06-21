@@ -7,10 +7,12 @@ import Certificates from "@/components/Certificates";
 import Project from "@/components/Project";
 import { motion } from "framer-motion";
 import FooterName from "@/components/Footer";
+import Cursor from "@/common/Cursor";
 
 export default function Home() {
   return (
     <>
+      <Cursor />
       <section className="flex flex-col items-center justify-center min-h-screen">
         <Landing />
       </section>
