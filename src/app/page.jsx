@@ -49,34 +49,6 @@ export default function Home() {
         <Contact />
       </section>
       <FooterName />
-      <div
-        className="relative w-[400px] h-[400px] overflow-hidden cursor-zoom-in"
-        onClick={handleClick}
-        onMouseMove={handleMouseMove}
-        ref={imageRef}
-      >
-        <Image
-          src={profilePic}
-          alt="Astronaut"
-          fill
-          className={`object-contain select-none pointer-events-none transition-opacity duration-200 ${isZoomed ? 'opacity-0' : 'opacity-100'
-            }`}
-          priority
-        />
-
-        {isZoomed && (
-          <div
-            className="absolute inset-0 z-10 pointer-events-none"
-            style={{
-              backgroundImage: `url(${profilePic.src})`,
-              backgroundRepeat: 'no-repeat',
-              backgroundSize: '800px 800px',
-              backgroundPosition: `${position.x}% ${position.y}%`,
-              cursor: 'zoom-out',
-            }}
-          />
-        )}
-      </div>
     </>
   );
 }
