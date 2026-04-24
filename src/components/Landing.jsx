@@ -1,72 +1,90 @@
 'use client';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { useEffect, useState, useRef } from 'react';
+import ConstellationCanvas from '@/common/ConstellationCanvas';
 
-import { motion, useAnimation } from 'framer-motion';
-import Banner from '@/assets/img/Banner.svg';
-import React, { useEffect, useState } from 'react'
-import Image from 'next/image';
-import StarsAndMeteors from '../common/StarField';
+/* ── Stagger container ──*/
+const containerVariants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.13, delayChildren: 0.15 } },
+};
+const itemVariants = {
+    hidden: { opacity: 0, y: 36 },
+    visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 70, damping: 16 } },
+};
 
 export default function Landing() {
-    const controls = useAnimation();
-    const [animate, setAnimate] = useState(false);
+    const { scrollY } = useScroll();
+    const [isClient, setIsClient] = useState(false);
+    const statsRef = useRef(null);
+    const statsInView = useInView(statsRef, { once: true, amount: 0 });
 
-    useEffect(() => {
-        console.log("start")
-        controls.start({
-            scale: [1, 1.10, 1],
-            transition: {
-                duration: 9,
-                repeat: Infinity,
-                ease: 'easeInOut',
-            },
-        });
-        setAnimate(true);
+    const opacity = useTransform(scrollY, [0, 400], [1, 0]);
+    const translateY = useTransform(scrollY, [0, 400], [0, 80]);
 
-        const handleScroll = () => {
-            const scrollPosition = window.scrollY;
-            const scrollPercent = scrollPosition / (document.body.scrollHeight - window.innerHeight);
-            const backgroundElement = document.getElementById('scrolling-background');
-            backgroundElement.style.backgroundPosition = `${100 - scrollPercent * 100}% ${100 - scrollPercent * 100}%`;
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, [controls]);
+    useEffect(() => { setIsClient(true); }, []);
+    if (!isClient) return null;
 
     return (
-        <div id="scrolling-background" className="relative w-full flex flex-col-reverse md:flex-row items-center justify-center h-screen space-y-4 md:space-y-0 md:space-x-4 p-4">
-            <motion.div animate={{ scale: [1, 1.2, 1.05, 0.78, 1.05, 1.2, 1] }} transition={{ duration: 6, ease: "linear", repeat: Infinity, repeatType: 'loop' }} className='hidden lg:absolute -top-2 left-20 w-24 h-24 rounded-full bg-gradient-to-b from-red-900 via-white to-green-900 blur-2xl z-0' />
-            <motion.div animate={{ rotate: 360, width: [200, 500, 354, 354, 500, 200], height: [140, 90, 40, 40, 90, 140] }} transition={{ duration: 30, repeat: Infinity, repeatType: 'loop', ease: "linear" }} className='hidden lg:absolute bottom-24 left-10 w-60 h-60 rounded-full bg-gradient-to-r from-pink-700/50 via-blue-500/30 blur-2xl opacity-90 z-0' />
-            <div className='hidden lg:absolute top-96 left-1/3 w-[750px] h-10 rounded-full rotate-45 bg-gradient-to-r from-fuchsia-900 via-teal-300 to-fuchsia-900 blur-3xl z-0' />
-            <StarsAndMeteors />
-
-            <div className="w-full px-4 py-12 flex flex-col z-10">
-                <motion.h1
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={animate ? { opacity: 1, x: 0 } : {}}
-                    transition={{ duration: 0.6 }}
-                    className="text-stone-300 text-5xl md:text-6xl uppercase font-extrabold leading-tight text-center md:text-right"
-                >
-                    <span className="tracking-tight italic text-cyan-900 stroke-1 stroke-cyan-500">Vishnu{" "}</span>
-                    <span className="tracking-tighter italic text-cyan-900/50" style={{ WebkitTextStroke: '1px #0e7490', WebkitTextFillColor: 'transparent', }}>
-                        Muthukumar
-                    </span>
-                </motion.h1>
-                <motion.h2
-                    initial={{ opacity: 0, x: 50 }}
-                    animate={animate ? { opacity: 1, x: 0 } : {}}
-                    transition={{ duration: 0.6, delay: 0.3 }}
-                    className="text-stone-400 uppercase text-3xl lg:text-5xl font-medium text-center lg:text-right tracking-tighter italic" style={{ WebkitTextStroke: '1px', WebkitTextFillColor: 'transparent', }}
-                >
-                    UI Developer
-                </motion.h2>
+        <div className="relative w-full min-h-screen overflow-hidden" style={{ backgroundColor: 'var(--bg-base)' }}>
+            {/* ── BASE RADIAL GLOW ── */}
+            <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse 60% 50% at 60% 40%, rgba(30,58,138,0.22) 0%, transparent 70%), radial-gradient(ellipse 40% 40% at 10% 80%, rgba(15,23,42,0.6) 0%, transparent 60%)` }} />
+            {/* ── CONSTELLATION — right panel ── */}
+            <div className="absolute top-0 right-0 w-full md:w-3/5 h-full pointer-events-none">
+                <ConstellationCanvas className="w-full h-full opacity-80" />
             </div>
 
-            {/* Astronaut Image */}
-            <motion.div animate={controls} className="z-10">
-                <Image src={Banner} alt='Banner Background' className="w-56 lg:w-96 h-full object-cover" />
+            {/* ── MAIN CONTENT ── */}
+            <motion.div style={{ opacity, y: translateY }} className="relative z-10 min-h-screen flex items-center pt-16">
+                <div className="w-full max-w-7xl mx-auto px-8 md:px-14 lg:px-20">
+                    <div className="md:w-3/5 lg:w-1/2">
+                        <motion.div variants={containerVariants} initial="hidden" animate="visible" className="flex flex-col gap-7">
+                            {/* Status badge */}
+                            <motion.div variants={itemVariants}>
+                                <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold tracking-widest uppercase" style={{ background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(96,165,250,0.25)', color: 'var(--accent-light)' }}>
+                                    <span className="w-1.5 h-1.5 rounded-full" style={{ background: '#4ade80', boxShadow: '0 0 8px #4ade80', animation: 'pulse-ring 2s infinite', }} />
+                                    Open to Opportunities
+                                </span>
+                            </motion.div>
+
+                            {/* Headline — Bodaghee style: light weight, large, period accent */}
+                            <motion.div variants={itemVariants}>
+                                <h1 className="font-bold leading-tight" style={{ fontSize: 'clamp(3rem, 8vw, 5.5rem)', letterSpacing: '-0.04em', color: 'var(--text-primary)', fontWeight: 700, }}>UI Developer<span style={{ color: 'var(--accent-light)' }}>.</span></h1>
+                                <h2 className="font-light mt-1" style={{ fontSize: 'clamp(1.8rem, 5vw, 3.5rem)', letterSpacing: '-0.03em', color: 'var(--text-secondary)', fontWeight: 300, }}>
+                                    &amp; Web Craftsman
+                                    <span style={{ color: 'var(--accent-light)' }}>.</span>
+                                </h2>
+                            </motion.div>
+
+                            {/* Divider accent line */}
+                            <motion.div variants={itemVariants} className="w-20 h-0.5" style={{ background: 'var(--accent-light)' }} />
+
+                            {/* Sub-headline */}
+                            <motion.p variants={itemVariants} className="text-base md:text-lg leading-relaxed max-w-md" style={{ color: 'var(--text-secondary)', lineHeight: 1.75 }}>
+                                Crafting high-performance web experiences across the MERN stack — blending engineering precision with design sensibility.
+                            </motion.p>
+
+                            {/* CTA row  */}
+                            <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
+                                <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }} transition={{ type: 'spring', stiffness: 400, damping: 20 }} onClick={() => document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' })} className="px-7 py-3 rounded-full font-semibold text-sm text-white" style={{ background: 'var(--accent)', boxShadow: '0 0 24px rgba(59,130,246,0.4)', }}>
+                                    View Projects
+                                </motion.button>
+                                <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.96 }} transition={{ type: 'spring', stiffness: 400, damping: 20 }} onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })} className="px-7 py-3 rounded-full font-semibold text-sm" style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.15)', color: 'var(--text-primary)', }}>
+                                    Get In Touch
+                                </motion.button>
+                            </motion.div>
+                        </motion.div>
+                    </div>
+                </div>
+            </motion.div>
+
+            {/* ── SCROLL INDICATOR ── */}
+            <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }} className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20" style={{ color: 'var(--text-muted)' }}>
+                <span className="text-xs tracking-widest uppercase" style={{ letterSpacing: '0.16em' }}>Scroll</span>
+                <svg width="14" height="18" viewBox="0 0 14 18" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M7 1v16M1 11l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
             </motion.div>
         </div>
-    )
+    );
 }

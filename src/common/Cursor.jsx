@@ -1,22 +1,38 @@
 'use client';
+import { useEffect } from 'react';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 
-import { useEffect, useState } from 'react';
-import { motion } from "framer-motion";
+export default function Cursor() {
+    const cursorX = useMotionValue(-100);
+    const cursorY = useMotionValue(-100);
+    const ringX = useMotionValue(-100);
+    const ringY = useMotionValue(-100);
 
-function Cursor() {
-    const [position, setPosition] = useState({ x: 0, y: 0 });
+    // Inner dot — snappy
+    const springX = useSpring(cursorX, { stiffness: 1000, damping: 45 });
+    const springY = useSpring(cursorY, { stiffness: 1000, damping: 45 });
+
+    // Outer ring — laggy (magnetic feel)
+    const ringSX = useSpring(ringX, { stiffness: 120, damping: 22 });
+    const ringSY = useSpring(ringY, { stiffness: 120, damping: 22 });
+
     useEffect(() => {
-        const mouseMove = (e) => {
-            setPosition({ x: e.clientX, y: e.clientY })
+        const move = (e) => {
+            cursorX.set(e.clientX);
+            cursorY.set(e.clientY);
+            ringX.set(e.clientX);
+            ringY.set(e.clientY);
         };
-        window.addEventListener("mousemove", mouseMove);
-        return () => {
-            window.removeEventListener("mousemove", mouseMove);
-        };
-    }, []);
-    return (
-        <motion.div className='w-[25px] h-[25px] bg-white mix-blend-difference rounded-full fixed z-[9999]' animate={{ x: position.x + 10, y: position.y + 10 }}></motion.div>
-    )
-}
+        window.addEventListener('mousemove', move);
+        return () => window.removeEventListener('mousemove', move);
+    }, [cursorX, cursorY, ringX, ringY]);
 
-export default Cursor
+    return (
+        <>
+            {/* Outer ring — lags behind */}
+            <motion.div style={{ translateX: ringSX, translateY: ringSY, x: '-50%', y: '-50%', position: 'fixed', top: 0, left: 0, zIndex: 9998, pointerEvents: 'none', width: 36, height: 36, borderRadius: '50%', border: '1.5px solid rgba(96,165,250,0.5)', backdropFilter: 'blur(0px)', }} />
+            {/* Inner dot — snappy */}
+            <motion.div style={{ translateX: springX, translateY: springY, x: '-50%', y: '-50%', position: 'fixed', top: 0, left: 0, zIndex: 9999, pointerEvents: 'none', width: 8, height: 8, borderRadius: '50%', backgroundColor: 'var(--accent-light)', boxShadow: '0 0 10px rgba(96,165,250,0.8)', }} />
+        </>
+    );
+}

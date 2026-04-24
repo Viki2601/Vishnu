@@ -1,40 +1,194 @@
 @import "tailwindcss";
 
+/* ─────────────────────────────────────────
+   DESIGN TOKENS  — Bodaghee-inspired
+───────────────────────────────────────── */
 :root {
-  --background: linear-gradient(to bottom right, #03070e, #122545);
-  /* Dark gradient */
-  --foreground: #ededed;
+  /* Backgrounds — deep navy */
+  --bg-base: #050510;
+  --bg-nav: rgba(5, 5, 20, 0.85);
+  --bg-surface: rgba(255, 255, 255, 0.04);
+  --bg-surface-hover: rgba(255, 255, 255, 0.07);
+
+  /* Borders */
+  --border: rgba(255, 255, 255, 0.08);
+  --border-accent: rgba(96, 165, 250, 0.35);
+
+  /* Accent — Electric Blue (sparingly) */
+  --accent: #3b82f6;
+  --accent-light: #60a5fa;
+  --accent-muted: rgba(59, 130, 246, 0.12);
+  --accent-glow: rgba(59, 130, 246, 0.28);
+
+  /* Highlight — subtle lime/electric for numbers & key text */
+  --highlight: #7dd3fc;
+
+  /* Text */
+  --text-primary: #f0f4ff;
+  --text-secondary: #94a3b8;
+  --text-muted: #475569;
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--bg-base);
+  --color-foreground: var(--text-primary);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --background: linear-gradient(to bottom right, #f0f9ff, #e0f2fe);
-    /* Light gradient */
-    --foreground: #171717;
-  }
+/* ─────────────────────────────────────────
+   BASE
+───────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
-  background: var(--background);
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  background-size: cover;
-  color: var(--foreground);
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  cursor: none;
+  overflow-x: hidden;
 }
 
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ─────────────────────────────────────────
+   NAVBAR GLASS
+───────────────────────────────────────── */
+.nav-glass {
+  background: var(--bg-nav);
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ─────────────────────────────────────────
+   GLASSMORPHISM UTILITIES
+───────────────────────────────────────── */
+.glass {
+  background: var(--bg-surface);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--border);
+}
+
+.glass-hover {
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.glass-hover:hover {
+  background: var(--bg-surface-hover);
+  border-color: var(--border-accent);
+  box-shadow: 0 0 0 1px var(--border-accent), 0 0 28px var(--accent-glow);
+}
+
+/* ─────────────────────────────────────────
+   SECTION UTILITIES
+───────────────────────────────────────── */
+.section-label {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-light);
+}
+
+.section-heading {
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.06;
+  color: var(--text-primary);
+}
+
+/* ─────────────────────────────────────────
+   ANIMATED TEXT
+───────────────────────────────────────── */
+/* Word-level scroll reveal — add class "reveal-word" to each word span */
+.word-hidden {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.word-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─────────────────────────────────────────
+   KEYFRAMES
+───────────────────────────────────────── */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
   }
 
-  
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse-ring {
+
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(96, 165, 250, 0.5);
+  }
+
+  50% {
+    box-shadow: 0 0 0 6px rgba(96, 165, 250, 0);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbit {
+  from {
+    transform: rotate(0deg) translateX(var(--orbit-r, 60px)) rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg) translateX(var(--orbit-r, 60px)) rotate(-360deg);
+  }
+}
+
+/* ─────────────────────────────────────────
+   SCROLLBAR HIDE
+───────────────────────────────────────── */
 .scroll-hide {
   scrollbar-width: none;
   -ms-overflow-style: none;
@@ -42,4 +196,101 @@ body {
 
 .scroll-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* ─────────────────────────────────────────
+   LINK UNDERLINE HOVER
+───────────────────────────────────────── */
+.nav-link {
+  position: relative;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent-light);
+  transition: width 0.25s ease;
+}
+
+.nav-link:hover {
+  color: var(--text-primary);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* ─────────────────────────────────────────
+   GRADIENT TEXT UTILITY
+───────────────────────────────────────── */
+.gradient-text {
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─────────────────────────────────────────
+   COUNT-UP NUMBER
+───────────────────────────────────────── */
+.count-number {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--accent-light);
+  line-height: 1;
+}
+
+/* ─────────────────────────────────────────
+   ELECTRIC SHOCK WAVE SCROLLBAR 
+───────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+  background: var(--bg-base);
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(4px);
+  border-left: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--accent);
+  border-radius: 10px;
+  /* Diagonal stripes to simulate electricity passing through */
+  background-image: repeating-linear-gradient(45deg, rgba(125, 211, 252, 0.6) 0%, rgba(125, 211, 252, 0.6) 10%, transparent 10%, transparent 20%);
+  border: 1px solid rgba(125, 211, 252, 0.3);
+  box-shadow: inset 0 0 10px rgba(96, 165, 250, 0.8), 0 0 15px rgba(59, 130, 246, 0.6);
+  animation: scrollbarElectric 1s linear infinite;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--accent-light);
+  box-shadow: inset 0 0 15px rgba(125, 211, 252, 0.9), 0 0 25px rgba(96, 165, 250, 0.8);
+}
+
+/* To animate the repeating gradient down the thumb */
+@keyframes scrollbarElectric {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 0 40px;
+  }
+}
+
+/* Firefox fallback */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) rgba(15, 23, 42, 0.4);
 }
