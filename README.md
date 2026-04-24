@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Vishnu Muthukumar — UI Developer Portfolio
 
-## Getting Started
+A high-performance, design-centric personal portfolio built with Next.js and animated using Framer Motion. This project reflects a "Sophisticated Dark Mode" aesthetic, prioritizing interactive motion, physics-based animations, and rich glassmorphism UI components.
 
-First, run the development server:
+![Portfolio Preview](./public/preview.webp) *(Optional: You can add an actual screenshot image to `/public/preview.webp`)*
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🚀 Live Demo
+**[vishnumuthukumar.com](https://vishnu-git-main-vishnus-projects-b11287f0.vercel.app)** *(Update this link to your production URL once deployed)*
+
+## ✨ Key Features
+- **Highly Interactive Hero Canvas**: Custom 90-node constellation network that reacts to mouse movement via `requestAnimationFrame`.
+- **Fluid Spring Animations**: Utilizes `framer-motion` springs for natural, bounce-driven interactions instead of rigid linear fades.
+- **Micro-interactions**: Magnetic hover buttons, word-by-word scroll reveal triggers, and animated electric scrollbars.
+- **Glassmorphism Design System**: Layered blurred surfaces, thin semi-transparent neon borders, and deep premium navy backgrounds (`#050510`).
+- **Responsive Architecture**: Fully optimized for mobile, tablet, and desktop viewing without sacrificing visual fidelity.
+
+## 🛠 Tech Stack
+- **Framework**: [Next.js 15](https://nextjs.org/) (App Directory)
+- **Styling**: Vanilla CSS with custom utility classes & CSS variables
+- **Motion Engine**: [Framer Motion](https://www.framer.com/motion/)
+- **Graphics & Logic**: React hooks, Web APIs (Canvas, IntersectionObserver)
+- **Deployment**: [Vercel](https://vercel.com/)
+
+## 📂 Project Structure
+```text
+src/
+├── app/
+│   ├── layout.jsx        # Root HTML wrapper & smooth scroll context
+│   ├── page.jsx          # Main landing index pulling all components
+│   └── globals.css       # Design tokens, keyframes, and utilities
+├── components/           # Main UI sections (Landing, About, Timeline, Project, etc.)
+└── common/               # Shared logic (ConstellationCanvas, Cursor, SmoothScroll)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 💻 Getting Started
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/Viki2601/Vishnu.git
+   cd vishnu
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. **Install dependencies:**
+   *(Ensure you have Next.js and Framer Motion installed)*
+   ```bash
+   npm install
+   ```
 
-## Learn More
+3. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+4. **Open your browser:**
+   Navigate to [http://localhost:3000](http://localhost:3000)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🎨 Design Philosophy
+The UI was explicitly crafted to bridge the gap between engineering rigour and modern premium design. Taking inspiration from top-tier digital agencies and enterprise analytics platforms (e.g., Bodaghee Consulting), it opts for deep navy tones over pure black, electric cyan accents over generic blues, and relies on subtle spatial depth (borders/shadows) over flat blocks.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🤝 Let's Connect
+- **LinkedIn**: [Vishnu Muthukumar](https://www.linkedin.com/in/vishnu-muthukumar-0b247021a/)
+- **GitHub**: [Viki2601](https://github.com/Viki2601)
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+*Built with passion and pixel-perfect precision.*
