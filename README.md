@@ -2,10 +2,8 @@
 
 A high-performance, design-centric personal portfolio built with Next.js and animated using Framer Motion. This project reflects a "Sophisticated Dark Mode" aesthetic, prioritizing interactive motion, physics-based animations, and rich glassmorphism UI components.
 
-![Portfolio Preview](./public/preview.webp) *(Optional: You can add an actual screenshot image to `/public/preview.webp`)*
-
 ## 🚀 Live Demo
-**[vishnumuthukumar.com](https://vishnu-git-main-vishnus-projects-b11287f0.vercel.app)** *(Update this link to your production URL once deployed)*
+**[vishnumuthukumar.com](https://vishnu-git-main-vishnus-projects-b11287f0.vercel.app)**
 
 ## ✨ Key Features
 - **Highly Interactive Hero Canvas**: Custom 90-node constellation network that reacts to mouse movement via `requestAnimationFrame`.
