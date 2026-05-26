@@ -1,9 +1,6 @@
 'use client';
 import { useEffect, useRef } from 'react';
-/**
- * ConstellationCanvas — animated node/edge network matching Bodaghee's hero visual
- * Lightweight canvas (~100 nodes), mouse-reactive parallax
- */
+
 export default function ConstellationCanvas({ className = '' }) {
     const canvasRef = useRef(null);
 
@@ -22,7 +19,6 @@ export default function ConstellationCanvas({ className = '' }) {
         const ro = new ResizeObserver(resize);
         ro.observe(canvas);
 
-        // Build nodes
         const NODE_COUNT = 90;
         const nodes = Array.from({ length: NODE_COUNT }, () => ({
             x: Math.random() * canvas.width,
@@ -45,9 +41,7 @@ export default function ConstellationCanvas({ className = '' }) {
         const draw = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Move nodes
             for (const n of nodes) {
-                // subtle mouse pull
                 const dx = mouse.x - n.x;
                 const dy = mouse.y - n.y;
                 const d = Math.hypot(dx, dy);
@@ -55,37 +49,31 @@ export default function ConstellationCanvas({ className = '' }) {
                     n.vx += (dx / d) * 0.006;
                     n.vy += (dy / d) * 0.006;
                 }
-
                 n.vx *= 0.98;
                 n.vy *= 0.98;
                 n.x += n.vx;
                 n.y += n.vy;
-
-                // bounce
                 if (n.x < 0 || n.x > canvas.width) n.vx *= -1;
                 if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
                 n.x = Math.max(0, Math.min(canvas.width, n.x));
                 n.y = Math.max(0, Math.min(canvas.height, n.y));
-
-                // dot
                 ctx.beginPath();
                 ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(96,165,250,0.55)';
+                ctx.fillStyle = 'rgba(232,103,58,0.5)';
                 ctx.fill();
             }
 
-            // Edges
             for (let i = 0; i < nodes.length; i++) {
                 for (let j = i + 1; j < nodes.length; j++) {
                     const dx = nodes[i].x - nodes[j].x;
                     const dy = nodes[i].y - nodes[j].y;
                     const d = Math.hypot(dx, dy);
                     if (d < LINK_DIST) {
-                        const alpha = (1 - d / LINK_DIST) * 0.4;
+                        const alpha = (1 - d / LINK_DIST) * 0.35;
                         ctx.beginPath();
                         ctx.moveTo(nodes[i].x, nodes[i].y);
                         ctx.lineTo(nodes[j].x, nodes[j].y);
-                        ctx.strokeStyle = `rgba(96,165,250,${alpha})`;
+                        ctx.strokeStyle = `rgba(232,103,58,${alpha})`;
                         ctx.lineWidth = 0.8;
                         ctx.stroke();
                     }

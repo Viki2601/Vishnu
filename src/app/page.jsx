@@ -6,8 +6,10 @@ import Timeline from "@/components/Timeline";
 import Certificates from "@/components/Certificates";
 import Project from "@/components/Project";
 import FooterName from "@/components/Footer";
-import Navbar from "@/components/Navbar";
 import Cursor from "@/common/Cursor";
+import AIChatWidget from "@/components/AiChat";
+import Services from "@/components/Services";
+import Marquee from "@/common/Marquee";
 
 export default function Home() {
   return (
@@ -17,6 +19,7 @@ export default function Home() {
         <section id="hero">
           <Landing />
         </section>
+        <Marquee />
         <section id="about">
           <About />
         </section>
@@ -29,6 +32,12 @@ export default function Home() {
         <section id="projects">
           <Project />
         </section>
+        <section id="services">
+          <Services />
+        </section>
+        {/* <section id="ai-chat">
+          <AIChatWidget />
+        </section> */}
         <section id="contact">
           <Contact />
         </section>

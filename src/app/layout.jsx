@@ -1,22 +1,29 @@
-import { Geist, Geist_Mono, Inter } from "next/font/google";
+import { Playfair_Display, DM_Sans, DM_Mono } from "next/font/google";
 import "./globals.css";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/next";
 import SmoothScroll from "@/common/Smoothscroll";
+import Navbar from "@/components/Navbar";
 
-const inter = Inter({
-  variable: "--font-inter",
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  weight: ["400", "500", "600", "700", "800", "900"],
+  style: ["normal", "italic"],
+  display: "swap",
 });
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const dmMono = DM_Mono({
+  variable: "--font-dm-mono",
   subsets: ["latin"],
+  weight: ["300", "400", "500"],
+  display: "swap",
 });
 
 export const metadata = {
@@ -40,14 +47,16 @@ export const metadata = {
   ],
   authors: [{ name: "Vishnu Muthukumar", url: "https://vishnumuthukumar.com" }],
   creator: "Vishnu Muthukumar",
-  description: "UI Developer specializing in modern web experiences — React, Next.js, MERN stack.",
+  description:
+    "UI Developer specializing in modern web experiences — React, Next.js, MERN stack.",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${geistSans.variable} ${geistMono.variable} antialiased`} style={{ fontFamily: "var(--font-inter), var(--font-geist-sans), sans-serif" }}>
+      <body className={`${playfair.variable} ${dmSans.variable} ${dmMono.variable} antialiased`} style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif", }}>
         <SmoothScroll>
+          <Navbar />
           {children}
         </SmoothScroll>
         <Analytics />
