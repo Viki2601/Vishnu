@@ -54,8 +54,13 @@
    BASE
 ───────────────────────────────────────── */
 html {
-  scroll-behavior: smooth;
   overflow-x: hidden;
+}
+
+@media (max-width: 767px) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
@@ -477,4 +482,50 @@ body {
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--accent) rgba(10, 10, 10, 0.6);
+}
+
+/* ─────────────────────────────────────────
+   HORIZONTAL SCROLL SYSTEM
+───────────────────────────────────────── */
+@media (min-width: 768px) {
+  .horizontal-scroll__wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  .horizontal-scroll__sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+  }
+
+  .horizontal-scroll__track {
+    display: flex;
+    flex-wrap: nowrap;
+    height: 100vh;
+    will-change: transform;
+  }
+
+  .horizontal-scroll__panel {
+    flex-shrink: 0;
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Custom panels can override width, e.g. .panel-wide { width: 150vw; } */
+  .horizontal-scroll__panel--wide {
+    width: 150vw;
+  }
+
+  .horizontal-scroll__panel--extra-wide {
+    width: 200vw;
+  }
+
+  .horizontal-scroll__panel--narrow {
+    width: 60vw;
+  }
 }

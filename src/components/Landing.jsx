@@ -1,7 +1,8 @@
 'use client';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import ConstellationCanvas from '@/common/ConstellationCanvas';
+import { useHorizontalScroll } from '@/common/HorizontalScrollContext';
 
 const containerVariants = {
     hidden: {},
@@ -15,17 +16,24 @@ const itemVariants = {
 export default function Landing() {
     const { scrollY } = useScroll();
     const [isClient, setIsClient] = useState(false);
+    const { scrollToPanel, isHorizontal } = useHorizontalScroll();
+
     useEffect(() => { setIsClient(true); }, []);
+    
+    // Maintain vertical fade-out when scrolled down
     const opacity = useTransform(scrollY, [0, 400], [1, 0]);
     const translateY = useTransform(scrollY, [0, 250], [0, 80]);
+
     if (!isClient) return null;
 
     return (
         <div className="relative w-full min-h-screen overflow-hidden" style={{ backgroundColor: 'var(--bg-base)' }}>
-            <div className="absolute inset-0 pointer-events-none bg-grid" style={{ opacity: 0.45 }} />
-            <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse 55% 50% at 65% 40%, rgba(232,103,58,0.09) 0%, transparent 70%),radial-gradient(ellipse 40% 40% at 5% 80%, rgba(10,10,10,0.7) 0%, transparent 60%)`, }} />
+            <div className="absolute inset-0 pointer-events-none bg-grid" style={{ opacity: 0.25 }} />
+            <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(ellipse 55% 50% at 65% 40%, rgba(123, 161, 133, 0.08) 0%, transparent 70%),radial-gradient(ellipse 40% 40% at 5% 80%, rgba(11,14,12,0.7) 0%, transparent 60%)`, }} />
+            
+            {/* Constellation background - acts as Breeze Canvas now */}
             <div className="absolute top-0 right-0 w-full md:w-3/5 h-full pointer-events-none">
-                <ConstellationCanvas className="w-full h-full opacity-70" />
+                <ConstellationCanvas className="w-full h-full opacity-60" />
             </div>
 
             <motion.div style={{ opacity, y: translateY }} className="relative z-10 min-h-screen flex items-center pt-16">
@@ -33,7 +41,7 @@ export default function Landing() {
                     <div className="md:w-3/5 lg:w-1/2">
                         <motion.div variants={containerVariants} initial="hidden" animate="visible" className="flex flex-col gap-7">
                             <motion.div variants={itemVariants}>
-                                <span className="inline-flex items-center gap-2 px-4 py-1.5 text-xs font-semibold tracking-widest uppercase" style={{ background: 'rgba(232,103,58,0.09)', border: '1px solid rgba(232,103,58,0.3)', borderRadius: 'var(--radius-sm)', color: 'var(--accent-light)', fontFamily: 'var(--font-dm-mono)', }}>
+                                <span className="inline-flex items-center gap-2 px-4 py-1.5 text-xs font-semibold tracking-widest uppercase" style={{ background: 'rgba(123, 161, 133, 0.08)', border: '1px solid rgba(123, 161, 133, 0.25)', borderRadius: 'var(--radius-sm)', color: 'var(--accent-light)', fontFamily: 'var(--font-dm-mono)', }}>
                                     <span className="w-1.5 h-1.5 rounded-full" style={{ background: '#4ade80', boxShadow: '0 0 8px #4ade80', animation: 'pulse-ring 2s infinite' }} />
                                     Open to Opportunities
                                 </span>
@@ -53,10 +61,10 @@ export default function Landing() {
                             </motion.p>
 
                             <motion.div variants={itemVariants} className="flex flex-wrap gap-4">
-                                <motion.button whileHover={{ opacity: 0.88, y: -2 }} whileTap={{ scale: 0.97 }} onClick={() => document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' })} style={{ padding: '13px 28px', background: 'var(--accent)', color: '#fff', border: 'none', borderRadius: 'var(--radius-sm)', fontFamily: 'var(--font-dm-sans)', fontSize: '0.9rem', fontWeight: 500, cursor: 'pointer', }}>
+                                <motion.button whileHover={{ opacity: 0.88, y: -2 }} whileTap={{ scale: 0.97 }} onClick={() => scrollToPanel('#projects')} style={{ padding: '10px 28px', background: 'var(--accent)', color: '#0b0e0c', border: 'none', borderRadius: '100px', fontFamily: 'var(--font-dm-sans)', fontSize: '0.9rem', fontWeight: 600, cursor: 'pointer', }}>
                                     View Projects
                                 </motion.button>
-                                <motion.button whileHover={{ borderColor: 'rgba(255,255,255,0.4)' }} whileTap={{ scale: 0.97 }} onClick={() => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' })} style={{ padding: '13px 28px', background: 'transparent', color: 'var(--text-primary)', border: '1px solid rgba(255,255,255,0.15)', borderRadius: 'var(--radius-sm)', fontFamily: 'var(--font-dm-sans)', fontSize: '0.9rem', cursor: 'pointer', }}>
+                                <motion.button whileHover={{ borderColor: 'rgba(255,255,255,0.4)', background: 'rgba(139,168,147,0.03)' }} whileTap={{ scale: 0.97 }} onClick={() => scrollToPanel('#contact')} style={{ padding: '10px 28px', background: 'transparent', color: 'var(--text-primary)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '100px', fontFamily: 'var(--font-dm-sans)', fontSize: '0.9rem', cursor: 'pointer', }}>
                                     Get In Touch
                                 </motion.button>
                             </motion.div>
@@ -65,11 +73,25 @@ export default function Landing() {
                 </div>
             </motion.div>
 
-            <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }} className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20" style={{ color: 'var(--text-muted)' }}>
-                <span style={{ fontFamily: 'var(--font-dm-mono)', fontSize: '0.65rem', letterSpacing: '0.2em', textTransform: 'uppercase' }}>Scroll</span>
-                <svg width="14" height="18" viewBox="0 0 14 18" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <path d="M7 1v16M1 11l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+            {/* Scroll Indicator */}
+            <motion.div 
+                animate={isHorizontal ? { x: [0, 8, 0] } : { y: [0, 8, 0] }} 
+                transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }} 
+                className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20" 
+                style={{ color: 'var(--text-muted)' }}
+            >
+                <span style={{ fontFamily: 'var(--font-dm-mono)', fontSize: '0.65rem', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
+                    {isHorizontal ? 'Scroll →' : 'Scroll'}
+                </span>
+                {isHorizontal ? (
+                    <svg width="18" height="14" viewBox="0 0 18 14" fill="none" stroke="currentColor" strokeWidth="1.5">
+                        <path d="M1 7h16M11 1l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                ) : (
+                    <svg width="14" height="18" viewBox="0 0 14 18" fill="none" stroke="currentColor" strokeWidth="1.5">
+                        <path d="M7 1v16M1 11l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                )}
             </motion.div>
         </div>
     );

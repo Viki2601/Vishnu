@@ -1,8 +1,7 @@
 import { Playfair_Display, DM_Sans, DM_Mono } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
-import SmoothScroll from "@/common/Smoothscroll";
-import Navbar from "@/components/Navbar";
+import LayoutClient from "./LayoutClient";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -52,15 +51,14 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const fontClasses = `${playfair.variable} ${dmSans.variable} ${dmMono.variable} antialiased`;
+  
   return (
     <html lang="en">
-      <body className={`${playfair.variable} ${dmSans.variable} ${dmMono.variable} antialiased`} style={{ fontFamily: "var(--font-dm-sans), system-ui, sans-serif", }}>
-        <SmoothScroll>
-          <Navbar />
-          {children}
-        </SmoothScroll>
-        <Analytics />
-      </body>
+      <LayoutClient fonts={fontClasses}>
+        {children}
+      </LayoutClient>
+      <Analytics />
     </html>
   );
 }

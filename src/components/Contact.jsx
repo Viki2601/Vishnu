@@ -1,6 +1,7 @@
 'use client';
-import { useRef, useState } from 'react';
-import { motion, useInView } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import useHorizontalInView from '@/common/useHorizontalInView';
 
 const socials = [
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/vishnu-muthukumar-0b247021a/' },
@@ -23,6 +24,26 @@ function ContactForm() {
     const [form, setForm] = useState({ name: '', email: '', type: '', message: '' });
     const [errors, setErrors] = useState({});
     const [status, setStatus] = useState('idle');
+    const [isOpen, setIsOpen] = useState(false);
+    const selectRef = useRef(null);
+
+    const options = [
+        { value: 'Landing Page ($299+)', label: 'Landing Page', price: '$299+' },
+        { value: 'UI Component Pack ($499+)', label: 'UI Component Pack', price: '$499+' },
+        { value: 'Full Web App UI ($999+)', label: 'Full Web App UI', price: '$999+' },
+        { value: 'Animation Sprint ($249+)', label: 'Animation Sprint', price: '$249+' },
+        { value: 'Something Else', label: 'Something Else', price: '' }
+    ];
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (selectRef.current && !selectRef.current.contains(event.target)) {
+                setIsOpen(false);
+            }
+        }
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
     function validate() {
         const e = {};
@@ -37,8 +58,26 @@ function ContactForm() {
         const e = validate();
         if (Object.keys(e).length) { setErrors(e); return; }
         setStatus('sending');
-        await new Promise(r => setTimeout(r, 1600));
-        setStatus('sent');
+
+        try {
+            const res = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(form),
+            });
+
+            const data = await res.json();
+
+            if (!res.ok || data.error) {
+                throw new Error(data.error || 'Failed to send');
+            }
+
+            setStatus('sent');
+
+        } catch (err) {
+            console.error(err);
+            setStatus('error');
+        }
     }
 
     const inputStyle = (field) => ({
@@ -85,18 +124,108 @@ function ContactForm() {
 
             {/* Project type */}
             <label style={labelStyle}>Project Type</label>
-            <select style={{ ...inputStyle('type'), appearance: 'none', cursor: 'pointer' }} value={form.type} onChange={e => setForm(f => ({ ...f, type: e.target.value }))}>
-                <option value="">Select a service…</option>
-                <option>Landing Page ($299+)</option>
-                <option>UI Component Pack ($499+)</option>
-                <option>Full Web App UI ($999+)</option>
-                <option>Animation Sprint ($249+)</option>
-                <option>Something Else</option>
-            </select>
+            <div ref={selectRef} style={{ position: 'relative', marginBottom: 16 }}>
+                <div
+                    onClick={() => { if (status !== 'sending') setIsOpen(!isOpen); }}
+                    style={{
+                        width: '100%', padding: '13px 16px',
+                        background: 'rgba(255,255,255,0.03)',
+                        border: `1px solid ${errors.type ? '#c44444' : (isOpen ? 'var(--accent)' : 'var(--border-solid)')}`,
+                        borderRadius: 'var(--radius-sm)',
+                        color: form.type ? 'var(--text-primary)' : 'var(--text-muted)',
+                        fontFamily: 'var(--font-dm-sans)', fontSize: '0.9rem',
+                        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                        cursor: status === 'sending' ? 'default' : 'pointer',
+                        userSelect: 'none',
+                        transition: 'border-color 0.2s, background 0.2s',
+                    }}
+                >
+                    <span>{form.type ? (options.find(o => o.value === form.type)?.label || form.type) : 'Select a service…'}</span>
+                    <motion.svg
+                        animate={{ rotate: isOpen ? 180 : 0 }}
+                        transition={{ duration: 0.2 }}
+                        width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        style={{ color: 'var(--text-muted)' }}
+                    >
+                        <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </motion.svg>
+                </div>
+
+                <AnimatePresence>
+                    {isOpen && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -8, scale: 0.98 }}
+                            animate={{ opacity: 1, y: 4, scale: 1 }}
+                            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+                            transition={{ duration: 0.15, ease: 'easeOut' }}
+                            style={{
+                                position: 'absolute',
+                                top: '100%',
+                                left: 0, right: 0,
+                                zIndex: 50,
+                                background: 'rgba(18,18,18,0.92)',
+                                backdropFilter: 'blur(20px)',
+                                border: '1px solid var(--border-solid2)',
+                                borderRadius: 'var(--radius-sm)',
+                                boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
+                                overflow: 'hidden',
+                                padding: '6px',
+                            }}
+                        >
+                            {options.map((option) => {
+                                const isSelected = form.type === option.value;
+                                return (
+                                    <div
+                                        key={option.value}
+                                        onClick={() => {
+                                            setForm(f => ({ ...f, type: option.value }));
+                                            setIsOpen(false);
+                                        }}
+                                        style={{
+                                            padding: '10px 12px',
+                                            borderRadius: 'var(--radius-xs, 4px)',
+                                            cursor: 'pointer',
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center',
+                                            background: isSelected ? 'var(--accent-muted)' : 'transparent',
+                                            transition: 'background 0.2s',
+                                        }}
+                                        onMouseEnter={(e) => {
+                                            if (!isSelected) e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
+                                        }}
+                                        onMouseLeave={(e) => {
+                                            if (!isSelected) e.currentTarget.style.background = 'transparent';
+                                        }}
+                                    >
+                                        <span style={{
+                                            fontFamily: 'var(--font-dm-sans)',
+                                            fontSize: '0.85rem',
+                                            color: isSelected ? 'var(--accent)' : 'var(--text-primary)',
+                                            fontWeight: isSelected ? 500 : 400,
+                                        }}>
+                                            {option.label}
+                                        </span>
+                                        {option.price && (
+                                            <span style={{
+                                                fontFamily: 'var(--font-dm-mono)',
+                                                fontSize: '0.72rem',
+                                                color: isSelected ? 'var(--accent)' : 'var(--text-muted)',
+                                            }}>
+                                                {option.price}
+                                            </span>
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
 
             {/* Message */}
             <label style={labelStyle}>Tell me about your project</label>
-            <textarea style={{ ...inputStyle('message'), resize: 'vertical', minHeight: 120 }} placeholder="What are you building? Timeline, budget…" value={form.message} onFocus={e => { e.target.style.borderColor = 'var(--accent)'; }} onBlur={e => { e.target.style.borderColor = errors.message ? '#c44444' : 'var(--border-solid)'; }} onChange={e => { setForm(f => ({ ...f, message: e.target.value })); setErrors(er => ({ ...er, message: '' })); }} />
+            <textarea style={{ ...inputStyle('message'), resize: 'none', minHeight: 100 }} placeholder="What are you building? Timeline, budget…" value={form.message} onFocus={e => { e.target.style.borderColor = 'var(--accent)'; }} onBlur={e => { e.target.style.borderColor = errors.message ? '#c44444' : 'var(--border-solid)'; }} onChange={e => { setForm(f => ({ ...f, message: e.target.value })); setErrors(er => ({ ...er, message: '' })); }} />
             {errors.message && <span style={{ fontFamily: 'var(--font-dm-mono)', fontSize: '0.7rem', color: '#c44444', marginBottom: 12 }}>{errors.message}</span>}
 
             {/* Submit */}
@@ -114,14 +243,13 @@ function ContactForm() {
 }
 
 export default function Contact() {
-    const sectionRef = useRef(null);
-    const isInView = useInView(sectionRef, { once: false, amount: 0.2 });
+    const [sectionRef, isInView] = useHorizontalInView({ once: false, amount: 'some' });
 
     return (
-        <section ref={sectionRef} className="relative w-full py-24 px-6 overflow-hidden" style={{ backgroundColor: 'var(--bg-base)', borderTop: '1px solid var(--border-solid)' }}>
+        <section ref={sectionRef} className="relative w-full h-full min-h-screen flex items-center py-24 px-6 overflow-hidden" style={{ backgroundColor: 'var(--bg-base)', borderTop: '1px solid var(--border-solid)' }}>
             <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 100%, rgba(232,103,58,0.07) 0%, transparent 70%)', }} />
             <motion.div variants={containerVariants} initial="hidden" animate={isInView ? 'visible' : 'hidden'} className="relative z-10 w-full max-w-7xl mx-auto">
-                <motion.div variants={itemVariants} className="mb-16 space-y-3">
+                <motion.div variants={itemVariants} className="mb-12 space-y-3">
                     <p className="section-label">Let's Work Together</p>
                     <h2 style={{ fontFamily: 'var(--font-playfair)', fontSize: 'clamp(2.8rem, 6vw, 5rem)', fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.06, color: 'var(--text-primary)', }}>
                         Got a project <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>in mind?</em>

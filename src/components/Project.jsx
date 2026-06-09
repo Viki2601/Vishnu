@@ -12,9 +12,11 @@ import Torque from '@/assets/projects/Torque.png';
 import Builderkit from '@/assets/projects/BuilderKit.png';
 import Dragon from '@/assets/projects/DC.png';
 import Myproject from '@/assets/projects/MAI.png';
+import Verdana from '@/assets/projects/Verdana.png';
 
 const projects = [
-    { title: 'Homura - 3D Kitchen', description: "Leverages Three.js WebGL power directly in the browser with Next.js SSR rendering — no plugins necessary, smooth 3D experience for every user.", image: Homura, url: 'https://3d-kitchen-nu.vercel.app/', category: 'fullstack', tags: ['React', 'Next.js', 'Framer', 'Three.js', '3D'] },
+    { title: 'Verdana - Nature Retreats', description: "A modern interactive web experience showcasing creative design, smooth animations, and high-performance frontend development with a focus on user engagement and visual storytelling.", image: Verdana, url: 'https://verdana-three.vercel.app/', category: 'front-end', tags: ['React', 'Next.js', 'Framer', 'Tailwind', 'Responsive'] },
+    { title: 'Homura - 3D Kitchen', description: "Leverages Three.js WebGL power directly in the browser with Next.js SSR rendering — no plugins necessary, smooth 3D experience for every user.", image: Homura, url: 'https://homura-kitchen.vercel.app/', category: 'fullstack', tags: ['React', 'Next.js', 'Framer', 'Three.js', '3D'] },
     { title: 'Builderkit', description: "Email template builder that makes the entire workflow effortless — from first draft to inbox delivery. One clean, fast interface replacing five tools.", image: Builderkit, url: 'https://builder-kit-six.vercel.app/', category: 'fullstack', tags: ['React', 'Next.js', 'Resend'] },
     { title: 'Myproject?.ai', description: "Internal project management platform at MAI Corporation — job postings, candidate tracking, dynamic dashboards, real-time updates, and analytics.", image: Myproject, url: 'https://myproject?.ai/', category: 'front-end', tags: ['Next.js', 'Redux', 'Tailwind', 'Framer Motion'] },
     { title: 'Dragon Customer', description: "Customer engagement and management platform — client interactions, activity monitoring, CRM tools, and a centralized communication hub.", image: Dragon, url: 'http://dragoncustomer.com/', category: 'front-end', tags: ['Next.js', 'Tailwind', 'Framer Motion'] },

@@ -30,9 +30,9 @@ export default function Cursor() {
     return (
         <>
             {/* Outer ring — lags behind */}
-            <motion.div style={{ translateX: ringSX, translateY: ringSY, x: '-50%', y: '-50%', position: 'fixed', top: 0, left: 0, zIndex: 9998, pointerEvents: 'none', width: 36, height: 36, borderRadius: '50%', border: '1.5px solid rgba(96,165,250,0.5)', backdropFilter: 'blur(0px)', }} />
+            <motion.div style={{ translateX: ringSX, translateY: ringSY, x: '-50%', y: '-50%', position: 'fixed', top: 0, left: 0, zIndex: 9998, pointerEvents: 'none', width: 36, height: 36, borderRadius: '50%', border: '1.5px solid rgba(123, 161, 133, 0.35)', backdropFilter: 'blur(0px)', }} />
             {/* Inner dot — snappy */}
-            <motion.div style={{ translateX: springX, translateY: springY, x: '-50%', y: '-50%', position: 'fixed', top: 0, left: 0, zIndex: 9999, pointerEvents: 'none', width: 8, height: 8, borderRadius: '50%', backgroundColor: 'var(--accent-light)', boxShadow: '0 0 10px rgba(96,165,250,0.8)', }} />
+            <motion.div style={{ translateX: springX, translateY: springY, x: '-50%', y: '-50%', position: 'fixed', top: 0, left: 0, zIndex: 9999, pointerEvents: 'none', width: 8, height: 8, borderRadius: '50%', backgroundColor: 'var(--accent-light)', boxShadow: '0 0 10px rgba(123, 161, 133, 0.6)', }} />
         </>
     );
 }

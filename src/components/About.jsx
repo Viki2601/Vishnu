@@ -1,10 +1,10 @@
 'use client';
-import React, { useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
+import useHorizontalInView from '@/common/useHorizontalInView';
 
 function RevealText({ text, className, style, delay = 0 }) {
-    const ref = useRef(null);
-    const inView = useInView(ref, { once: true, amount: 0.6 });
+    const [ref, inView] = useHorizontalInView({ once: true, amount: 'some' });
     const words = text.split(' ');
     return (
         <span ref={ref} className={className} style={{ ...style, display: 'block' }}>
@@ -27,19 +27,18 @@ const itemVariants = {
 };
 
 const stats = [
-    { label: 'Status', value: 'Active', color: '#4ade80' },
+    { label: 'Status', value: 'Active', color: '#6bc785' },
     { label: 'Focus', value: 'UI / Web', color: 'var(--accent)' },
-    { label: 'Stack', value: 'MERN', color: '#f59e0b' },
+    { label: 'Stack', value: 'MERN', color: '#c8b18f' }, /* Gold Meadow Sand */
     { label: 'Location', value: 'Chennai, IN', color: 'var(--text-secondary)' },
 ];
 
 export default function About() {
-    const sectionRef = useRef(null);
-    const isInView = useInView(sectionRef, { once: false, amount: 0.2 });
+    const [sectionRef, isInView] = useHorizontalInView({ once: false, amount: 'some' });
 
     return (
-        <section ref={sectionRef} className="relative w-full min-h-screen flex items-center justify-center overflow-hidden py-28 px-8 md:px-14 lg:px-20" style={{ backgroundColor: 'var(--bg-base)', borderTop: '1px solid var(--border-solid)' }}>
-            <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 70% 50% at 20% 50%, rgba(232,103,58,0.07) 0%, transparent 70%)', }} />
+        <section ref={sectionRef} className="relative w-full h-full min-h-screen flex items-center justify-center overflow-hidden py-28 px-8 md:px-14 lg:px-20" style={{ backgroundColor: 'var(--bg-base)', borderTop: '1px solid var(--border-solid)' }}>
+            <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 70% 50% at 20% 50%, rgba(123, 161, 133, 0.05) 0%, transparent 70%)', }} />
             <div className="relative z-10 w-full max-w-7xl mx-auto">
                 <div className="grid md:grid-cols-2 gap-16 lg:gap-24 items-center">
                     <motion.div initial={{ opacity: 0, x: -40 }} animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }} transition={{ type: 'spring', stiffness: 70, damping: 18 }} className="space-y-6">
@@ -69,7 +68,7 @@ export default function About() {
 
                         <div className="grid grid-cols-2 gap-3">
                             {stats?.map((stat) => (
-                                <motion.div key={stat?.label} variants={itemVariants} className="flex items-center gap-3 px-4 py-3" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid var(--border-solid)', borderRadius: 'var(--radius-sm)', }}>
+                                <motion.div key={stat?.label} variants={itemVariants} className="flex items-center gap-3 px-4 py-3" style={{ background: 'rgba(255,255,255,0.015)', border: '1px solid var(--border-solid)', borderRadius: 'var(--radius-sm)', }}>
                                     <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: stat?.color, boxShadow: `0 0 8px ${stat?.color}` }} />
                                     <div>
                                         <p style={{ fontFamily: 'var(--font-dm-mono)', fontSize: '0.65rem', color: 'var(--text-muted)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>

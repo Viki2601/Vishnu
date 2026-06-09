@@ -1,6 +1,6 @@
 'use client';
-import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { motion } from 'framer-motion';
+import useHorizontalInView from '@/common/useHorizontalInView';
 
 const socials = [
     {
@@ -24,16 +24,15 @@ const socials = [
 ];
 
 export default function FooterName() {
-    const footerRef = useRef(null);
-    const isInView  = useInView(footerRef, { once: false, amount: 0.3 });
+    const [footerRef, isInView] = useHorizontalInView({ once: false, amount: 'some' });
 
     return (
         <footer
             ref={footerRef}
-            className="relative w-full overflow-hidden"
+            className="relative w-full h-full flex items-center overflow-hidden py-10"
             style={{ backgroundColor: 'var(--bg-base)', borderTop: '1px solid var(--border-solid)' }}
         >
-            <div className="relative max-w-7xl mx-auto px-6 py-20 flex flex-col items-center text-center gap-8">
+            <div className="relative w-full max-w-7xl mx-auto px-6 flex flex-col items-center text-center gap-6">
 
                 {/* Large watermark name */}
                 <motion.div
@@ -45,7 +44,7 @@ export default function FooterName() {
                         className="select-none leading-none"
                         style={{
                             fontFamily: 'var(--font-playfair)',
-                            fontSize: 'clamp(3rem, 12vw, 10rem)',
+                            fontSize: 'clamp(2.5rem, 10vw, 8rem)',
                             fontWeight: 900,
                             letterSpacing: '-0.05em',
                             color: 'var(--text-muted)',
@@ -61,7 +60,7 @@ export default function FooterName() {
                     initial={{ opacity: 0, scaleX: 0 }}
                     animate={isInView ? { opacity: 1, scaleX: 1 } : { opacity: 0, scaleX: 0 }}
                     transition={{ duration: 0.6, delay: 0.3 }}
-                    className="w-32 h-px"
+                    className="w-24 h-px"
                     style={{ background: 'linear-gradient(90deg, transparent, var(--accent), transparent)' }}
                 />
 
@@ -70,12 +69,12 @@ export default function FooterName() {
                     initial={{ opacity: 0, y: 16 }}
                     animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
                     transition={{ type: 'spring', stiffness: 80, damping: 18, delay: 0.35 }}
-                    className="space-y-2"
+                    className="space-y-1.5"
                 >
-                    <p style={{ fontFamily: 'var(--font-dm-mono)', fontSize: '0.72rem', color: 'var(--accent)', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
+                    <p style={{ fontFamily: 'var(--font-dm-mono)', fontSize: '0.68rem', color: 'var(--accent)', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
                         UI Developer · Chennai, India
                     </p>
-                    <p style={{ fontFamily: 'var(--font-dm-sans)', fontSize: '0.875rem', color: 'var(--text-muted)' }}>
+                    <p style={{ fontFamily: 'var(--font-dm-sans)', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
                         Crafting modern web experiences with precision.
                     </p>
                 </motion.div>
@@ -115,14 +114,14 @@ export default function FooterName() {
                     initial={{ opacity: 0 }}
                     animate={isInView ? { opacity: 1 } : { opacity: 0 }}
                     transition={{ delay: 0.6 }}
-                    className="w-full flex flex-col md:flex-row items-center justify-between gap-3 pt-6"
+                    className="w-full flex flex-col items-center gap-2 pt-6"
                     style={{ borderTop: '1px solid var(--border-solid)' }}
                 >
-                    <p style={{ fontFamily: 'var(--font-dm-mono)', fontSize: '0.68rem', color: 'var(--text-muted)', letterSpacing: '0.06em' }}>
+                    <p style={{ fontFamily: 'var(--font-dm-mono)', fontSize: '0.65rem', color: 'var(--text-muted)', letterSpacing: '0.06em' }}>
                         © {new Date().getFullYear()} Vishnu Muthukumar. All rights reserved.
                     </p>
-                    <p style={{ fontFamily: 'var(--font-dm-mono)', fontSize: '0.68rem', color: 'var(--text-muted)', letterSpacing: '0.06em' }}>
-                        Built with Next.js · Framer Motion · Claude
+                    <p style={{ fontFamily: 'var(--font-dm-mono)', fontSize: '0.65rem', color: 'var(--text-muted)', letterSpacing: '0.06em' }}>
+                        Built with Next.js · GSAP · Framer Motion
                     </p>
                 </motion.div>
             </div>

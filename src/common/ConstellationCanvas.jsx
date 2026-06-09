@@ -9,7 +9,7 @@ export default function ConstellationCanvas({ className = '' }) {
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
         let animId;
-        let mouse = { x: canvas.width / 2, y: canvas.height / 2 };
+        let mouse = { x: -1000, y: -1000, vx: 0, vy: 0, lastX: 0, lastY: 0 };
 
         const resize = () => {
             canvas.width = canvas.offsetWidth;
@@ -19,65 +19,124 @@ export default function ConstellationCanvas({ className = '' }) {
         const ro = new ResizeObserver(resize);
         ro.observe(canvas);
 
-        const NODE_COUNT = 90;
-        const nodes = Array.from({ length: NODE_COUNT }, () => ({
+        // Particle configuration (Leaves)
+        const LEAF_COUNT = 60;
+        const leaves = Array.from({ length: LEAF_COUNT }, () => ({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
-            vx: (Math.random() - 0.5) * 0.3,
-            vy: (Math.random() - 0.5) * 0.3,
-            r: Math.random() * 2 + 1,
+            length: Math.random() * 8 + 6,
+            width: Math.random() * 4 + 3,
+            vx: Math.random() * 0.7 + 0.3,
+            vy: (Math.random() - 0.5) * 0.2,
+            angle: Math.random() * Math.PI * 2,
+            rotSpeed: (Math.random() - 0.5) * 0.02,
+            swaySpeed: Math.random() * 0.02 + 0.01,
+            swayTime: Math.random() * 100,
+            alpha: Math.random() * 0.35 + 0.15,
+            color: Math.random() > 0.4 ? 'rgba(123, 161, 133, ' : 'rgba(172, 197, 180, ',
+        }));
+
+        // Wind flow lines
+        const WIND_LINE_COUNT = 6;
+        const windLines = Array.from({ length: WIND_LINE_COUNT }, () => ({
+            points: Array.from({ length: 6 }, (_, idx) => ({ x: 0, y: 0 })),
+            xOffset: Math.random() * 200,
+            yBase: Math.random() * canvas.height,
+            speed: Math.random() * 1.5 + 0.8,
+            width: Math.random() * 1.5 + 0.5,
+            alpha: Math.random() * 0.06 + 0.02,
         }));
 
         const onMouseMove = (e) => {
             const rect = canvas.getBoundingClientRect();
-            mouse.x = e.clientX - rect.left;
-            mouse.y = e.clientY - rect.top;
+            const currentX = e.clientX - rect.left;
+            const currentY = e.clientY - rect.top;
+            
+            // Calculate mouse velocity
+            mouse.vx = currentX - mouse.lastX;
+            mouse.vy = currentY - mouse.lastY;
+            mouse.x = currentX;
+            mouse.y = currentY;
+            mouse.lastX = currentX;
+            mouse.lastY = currentY;
         };
         window.addEventListener('mousemove', onMouseMove);
 
-        const LINK_DIST = 130;
-        const MOUSE_DIST = 180;
+        const drawLeaf = (x, y, length, width, angle, color, alpha) => {
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(angle);
+            ctx.beginPath();
+            ctx.moveTo(0, -length / 2);
+            ctx.quadraticCurveTo(width / 2, 0, 0, length / 2);
+            ctx.quadraticCurveTo(-width / 2, 0, 0, -length / 2);
+            ctx.closePath();
+            ctx.fillStyle = `${color}${alpha})`;
+            ctx.fill();
+            ctx.restore();
+        };
 
         const draw = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            for (const n of nodes) {
-                const dx = mouse.x - n.x;
-                const dy = mouse.y - n.y;
-                const d = Math.hypot(dx, dy);
-                if (d < MOUSE_DIST) {
-                    n.vx += (dx / d) * 0.006;
-                    n.vy += (dy / d) * 0.006;
-                }
-                n.vx *= 0.98;
-                n.vy *= 0.98;
-                n.x += n.vx;
-                n.y += n.vy;
-                if (n.x < 0 || n.x > canvas.width) n.vx *= -1;
-                if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
-                n.x = Math.max(0, Math.min(canvas.width, n.x));
-                n.y = Math.max(0, Math.min(canvas.height, n.y));
-                ctx.beginPath();
-                ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-                ctx.fillStyle = 'rgba(232,103,58,0.5)';
-                ctx.fill();
-            }
+            // Decelerate mouse velocities
+            mouse.vx *= 0.95;
+            mouse.vy *= 0.95;
 
-            for (let i = 0; i < nodes.length; i++) {
-                for (let j = i + 1; j < nodes.length; j++) {
-                    const dx = nodes[i].x - nodes[j].x;
-                    const dy = nodes[i].y - nodes[j].y;
-                    const d = Math.hypot(dx, dy);
-                    if (d < LINK_DIST) {
-                        const alpha = (1 - d / LINK_DIST) * 0.35;
-                        ctx.beginPath();
-                        ctx.moveTo(nodes[i].x, nodes[i].y);
-                        ctx.lineTo(nodes[j].x, nodes[j].y);
-                        ctx.strokeStyle = `rgba(232,103,58,${alpha})`;
-                        ctx.lineWidth = 0.8;
-                        ctx.stroke();
+            // Draw wind lines
+            for (const wl of windLines) {
+                wl.xOffset += wl.speed;
+                if (wl.xOffset > canvas.width + 300) {
+                    wl.xOffset = -300;
+                    wl.yBase = Math.random() * canvas.height;
+                }
+
+                ctx.beginPath();
+                ctx.strokeStyle = `rgba(139, 168, 147, ${wl.alpha})`;
+                ctx.lineWidth = wl.width;
+                
+                // Draw curve using quadratic lines
+                for (let i = 0; i < 6; i++) {
+                    const px = wl.xOffset + i * 80 - 150;
+                    const py = wl.yBase + Math.sin((wl.xOffset + i * 40) * 0.01) * 30;
+                    if (i === 0) {
+                        ctx.moveTo(px, py);
+                    } else {
+                        ctx.lineTo(px, py);
                     }
                 }
+                ctx.stroke();
+            }
+
+            // Draw leaf particles
+            for (const n of leaves) {
+                // Move leaves to the right (simulating wind)
+                n.swayTime += n.swaySpeed;
+                n.x += n.vx;
+                n.y += n.vy + Math.sin(n.swayTime) * 0.25;
+                n.angle += n.rotSpeed;
+
+                // Mouse interaction - push leaves away and accelerate them based on mouse velocity
+                const dx = n.x - mouse.x;
+                const dy = n.y - mouse.y;
+                const dist = Math.hypot(dx, dy);
+                if (dist < 120) {
+                    const force = (120 - dist) / 120;
+                    // Add wind gust speed from mouse velocity
+                    n.x += (dx / dist) * force * 4 + mouse.vx * force * 0.15;
+                    n.y += (dy / dist) * force * 4 + mouse.vy * force * 0.15;
+                    n.angle += force * 0.1;
+                }
+
+                // Wrap-around screen bounds
+                if (n.x > canvas.width + 20) {
+                    n.x = -20;
+                    n.y = Math.random() * canvas.height;
+                }
+                if (n.y < -20) n.y = canvas.height + 20;
+                if (n.y > canvas.height + 20) n.y = -20;
+
+                drawLeaf(n.x, n.y, n.length, n.width, n.angle, n.color, n.alpha);
             }
 
             animId = requestAnimationFrame(draw);
