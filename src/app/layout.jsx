@@ -1,4 +1,4 @@
-import { Playfair_Display, DM_Sans, DM_Mono } from "next/font/google";
+import { Playfair_Display, DM_Sans, DM_Mono, Montserrat, Raleway } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import LayoutClient from "./LayoutClient";
@@ -22,6 +22,20 @@ const dmMono = DM_Mono({
   variable: "--font-dm-mono",
   subsets: ["latin"],
   weight: ["300", "400", "500"],
+  display: "swap",
+});
+
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  display: "swap",
+});
+
+const raleway = Raleway({
+  variable: "--font-raleway",
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   display: "swap",
 });
 
@@ -51,7 +65,7 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  const fontClasses = `${playfair.variable} ${dmSans.variable} ${dmMono.variable} antialiased`;
+  const fontClasses = `${playfair.variable} ${dmSans.variable} ${dmMono.variable} ${montserrat.variable} ${raleway.variable} antialiased`;
   
   return (
     <html lang="en">

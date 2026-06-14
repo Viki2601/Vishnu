@@ -17,14 +17,31 @@ export default function Cursor() {
     const ringSY = useSpring(ringY, { stiffness: 120, damping: 22 });
 
     useEffect(() => {
+        let rafId = null;
+        let lastEvent = null;
+
         const move = (e) => {
-            cursorX.set(e.clientX);
-            cursorY.set(e.clientY);
-            ringX.set(e.clientX);
-            ringY.set(e.clientY);
+            lastEvent = e;
+            if (rafId !== null) return;
+            
+            rafId = requestAnimationFrame(() => {
+                if (lastEvent) {
+                    cursorX.set(lastEvent.clientX);
+                    cursorY.set(lastEvent.clientY);
+                    ringX.set(lastEvent.clientX);
+                    ringY.set(lastEvent.clientY);
+                }
+                rafId = null;
+            });
         };
-        window.addEventListener('mousemove', move);
-        return () => window.removeEventListener('mousemove', move);
+
+        window.addEventListener('mousemove', move, { passive: true });
+        return () => {
+            window.removeEventListener('mousemove', move);
+            if (rafId !== null) {
+                cancelAnimationFrame(rafId);
+            }
+        };
     }, [cursorX, cursorY, ringX, ringY]);
 
     return (

@@ -1,4 +1,3 @@
-'use client';
 import About from "@/components/About";
 import Landing from "@/components/Landing";
 import Contact from "@/components/Contact";
@@ -7,42 +6,48 @@ import Certificates from "@/components/Certificates";
 import Project from "@/components/Project";
 import FooterName from "@/components/Footer";
 import Cursor from "@/common/Cursor";
-import AIChatWidget from "@/components/AiChat";
 import Services from "@/components/Services";
-import Marquee from "@/common/Marquee";
+import HorizontalScroll from "@/common/HorizontalScroll";
 
 export default function Home() {
   return (
     <>
       <Cursor />
       <main>
-        <section id="hero">
-          <Landing />
-        </section>
-        <Marquee />
-        <section id="about">
-          <About />
-        </section>
-        <section id="journey">
-          <Timeline />
-        </section>
-        <section id="certificates">
-          <Certificates />
-        </section>
-        <section id="projects">
-          <Project />
-        </section>
-        <section id="services">
-          <Services />
-        </section>
-        {/* <section id="ai-chat">
-          <AIChatWidget />
-        </section> */}
-        <section id="contact">
-          <Contact />
-        </section>
+        <HorizontalScroll>
+          <div className="horizontal-scroll__panel" id="hero">
+            <Landing />
+          </div>
+          
+          <div className="horizontal-scroll__panel p-12" id="about">
+            <About />
+          </div>
+          
+          <div className="horizontal-scroll__panel--extra-wide flex-shrink-0" id="journey">
+            <Timeline />
+          </div>
+          
+          <div className="horizontal-scroll__panel p-6 overflow-hidden" id="certificates">
+            <Certificates />
+          </div>
+          
+          <div className="horizontal-scroll__panel flex-shrink-0" id="projects">
+            <Project />
+          </div>
+          
+          <div className="horizontal-scroll__panel w-full md:w-[120vw] flex-shrink-0" id="services">
+            <Services />
+          </div>
+          
+          <div className="horizontal-scroll__panel" id="contact">
+            <Contact />
+          </div>
+
+          <div className="horizontal-scroll__panel w-full md:w-[60vw] flex-shrink-0" id="footer">
+            <FooterName />
+          </div>
+        </HorizontalScroll>
       </main>
-      <FooterName />
     </>
   );
 }

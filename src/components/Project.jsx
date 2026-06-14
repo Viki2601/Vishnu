@@ -1,105 +1,168 @@
 'use client';
-import { motion, useInView } from 'framer-motion';
+import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { useRef, useState } from 'react';
 import Image from 'next/image';
-import Anime from '@/assets/projects/Anime.png';
-import CV from '@/assets/projects/CV.io.png';
-import DOIT from '@/assets/projects/DO-IT.png';
-import Ecourse from '@/assets/projects/E-course.png';
-import JobPortal from '@/assets/projects/Job-Portal.png';
-import Homura from '@/assets/projects/Homura.png';
-import Torque from '@/assets/projects/Torque.png';
-import Builderkit from '@/assets/projects/BuilderKit.png';
-import Dragon from '@/assets/projects/DC.png';
-import Myproject from '@/assets/projects/MAI.png';
-import Verdana from '@/assets/projects/Verdana.png';
+import { categories, projects } from '@/lib/contents';
 
-const projects = [
-    { title: 'Verdana - Nature Retreats', description: "A modern interactive web experience showcasing creative design, smooth animations, and high-performance frontend development with a focus on user engagement and visual storytelling.", image: Verdana, url: 'https://verdana-three.vercel.app/', category: 'front-end', tags: ['React', 'Next.js', 'Framer', 'Tailwind', 'Responsive'] },
-    { title: 'Homura - 3D Kitchen', description: "Leverages Three.js WebGL power directly in the browser with Next.js SSR rendering — no plugins necessary, smooth 3D experience for every user.", image: Homura, url: 'https://homura-kitchen.vercel.app/', category: 'fullstack', tags: ['React', 'Next.js', 'Framer', 'Three.js', '3D'] },
-    { title: 'Builderkit', description: "Email template builder that makes the entire workflow effortless — from first draft to inbox delivery. One clean, fast interface replacing five tools.", image: Builderkit, url: 'https://builder-kit-six.vercel.app/', category: 'fullstack', tags: ['React', 'Next.js', 'Resend'] },
-    { title: 'Myproject?.ai', description: "Internal project management platform at MAI Corporation — job postings, candidate tracking, dynamic dashboards, real-time updates, and analytics.", image: Myproject, url: 'https://myproject?.ai/', category: 'front-end', tags: ['Next.js', 'Redux', 'Tailwind', 'Framer Motion'] },
-    { title: 'Dragon Customer', description: "Customer engagement and management platform — client interactions, activity monitoring, CRM tools, and a centralized communication hub.", image: Dragon, url: 'http://dragoncustomer.com/', category: 'front-end', tags: ['Next.js', 'Tailwind', 'Framer Motion'] },
-    { title: 'Torque Grid', description: 'Interactive web experience showcasing JDM and old-school cars with modern UI/UX design principles.', image: Torque, url: 'https://incomparable-methods-180972.framer.app/', category: 'design', tags: ['Framer', 'UI/UX', 'Web Design'] },
-    { title: 'Anime World', description: 'Responsive website for anime enthusiasts — design systems, animation principles, and user-centered experiences with immersive visuals.', image: Anime, url: 'https://energized-tone-070547.framer.app/', category: 'design', tags: ['Framer', 'Responsive', 'UI Design'] },
-    { title: 'CV.io', description: 'Modern resume and CV builder platform with a sleek, intuitive interface for creating professional documents.', image: CV, url: 'https://resume-builder-client-lhlq.onrender.com/', category: 'fullstack', tags: ['React', 'Node.js', 'MongoDB'] },
-    { title: 'DO-IT | Tasks', description: 'Task management app for personal tasks, work assignments, and long-term goals with milestone tracking.', image: DOIT, url: 'https://do-it-ui.onrender.com/', category: 'fullstack', tags: ['React', 'Express', 'UI'] },
-    { title: 'E-Course', description: 'Online learning management system with interactive educational components and responsive design.', image: Ecourse, url: 'https://e-learning-website-client.onrender.com/', category: 'fullstack', tags: ['MERN', 'EdTech', 'Responsive'] },
-    { title: 'Job Land', description: 'Dynamic job marketplace connecting candidates with employers — full-stack portal with live listings.', image: JobPortal, url: 'https://job-land-frontend.onrender.com/', category: 'fullstack', tags: ['Full Stack', 'Job Portal'] },
-];
+const INITIAL_COUNT = 6;
 
-const categories = [
-    { id: 'all', label: 'All' },
-    { id: 'fullstack', label: 'Full Stack' },
-    { id: 'design', label: 'Design' },
-    { id: 'front-end', label: 'Front-end' },
-];
+function Blob({ style }) {
+    return (
+        <div style={{ position: 'absolute', borderRadius: '50%', filter: 'blur(80px)', pointerEvents: 'none', zIndex: 0, ...style, }} />
+    );
+}
 
-export default function Project() {
-    const containerRef = useRef(null);
-    const [filter, setFilter] = useState('all');
-    const [hovered, setHovered] = useState(null);
-    const isInView = useInView(containerRef, { once: false, amount: 0.1 });
-    const filtered = filter === 'all' ? projects : projects.filter(p => p.category === filter);
+function ProjectCard({ project, index }) {
+    const [hovered, setHovered] = useState(false);
 
     return (
-        <section ref={containerRef} className="relative w-full py-24 px-6 overflow-hidden" style={{ backgroundColor: 'var(--bg-base)', borderTop: '1px solid var(--border-solid)' }}>
-            <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 70% 50% at 15% 50%, rgba(232,103,58,0.04) 0%, transparent 70%)', }} />
-            <div className="relative z-10 max-w-7xl mx-auto">
-                <motion.div initial={{ opacity: 0, y: -24 }} animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -24 }} transition={{ type: 'spring', stiffness: 80, damping: 18 }} className="mb-12 space-y-4">
-                    <p className="section-label">Selected Work</p>
-                    <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-                        <h2 style={{ fontFamily: 'var(--font-playfair)', fontSize: 'clamp(2.8rem, 6vw, 5rem)', fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.06, color: 'var(--text-primary)', }}>
-                            Projects &amp; <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>Builds</em>
-                        </h2>
+        <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ type: 'spring', stiffness: 70, damping: 18, delay: (index % 3) * 0.07 }}
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+            style={{ position: 'relative', display: 'flex', flexDirection: 'column', background: hovered ? 'rgba(192,38,211,0.04)' : 'rgba(5,5,12,0.5)', border: `1px solid ${hovered ? 'rgba(192,38,211,0.4)' : 'rgba(192,38,211,0.12)'}`, borderRadius: 'var(--radius-md)', overflow: 'hidden', cursor: 'pointer', transform: hovered ? 'translateY(-6px)' : 'translateY(0)', boxShadow: hovered ? '0 20px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(192,38,211,0.2)' : 'none', transition: 'all 0.35s cubic-bezier(0.25,0.1,0.25,1)', }}
+        >
+            <div style={{ position: 'relative', height: 200, overflow: 'hidden', background: '#020205' }}>
+                <Image src={project?.image} alt={project?.title} fill style={{ objectFit: 'cover', transform: hovered ? 'scale(1.07)' : 'scale(1)', transition: 'transform 0.6s cubic-bezier(0.25,0.1,0.25,1)', }} />
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(2,2,5,0.95) 0%, transparent 55%)' }} />
+                <span style={{ position: 'absolute', top: 12, left: 12, fontFamily: 'var(--font-montserrat)', fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', padding: '3px 10px', background: 'rgba(5,5,12,0.82)', backdropFilter: 'blur(8px)', border: '1px solid rgba(192,38,211,0.3)', color: 'var(--accent-light)', borderRadius: 100, }}>
+                    {project?.category}
+                </span>
 
-                        <div className="flex gap-2 flex-wrap">
-                            {categories?.map(cat => (
-                                <motion.button key={cat?.id} onClick={() => setFilter(cat?.id)} whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} style={{ padding: '7px 18px', borderRadius: 'var(--radius-sm)', fontFamily: 'var(--font-dm-mono)', fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.08em', textTransform: 'uppercase', cursor: 'pointer', border: 'none', transition: 'all 0.2s ease', ...(filter === cat?.id ? { background: 'var(--accent)', color: '#fff', boxShadow: '0 0 20px rgba(232,103,58,0.3)' } : { background: 'rgba(255,255,255,0.05)', border: '1px solid var(--border)', color: 'var(--text-secondary)' }), }}>
-                                    {cat?.label}
-                                </motion.button>
-                            ))}
+                <span style={{ position: 'absolute', bottom: 12, right: 14, fontFamily: 'var(--font-montserrat)', fontSize: '2.5rem', fontWeight: 900, color: 'rgba(255,255,255,0.06)', lineHeight: 1, userSelect: 'none', }}>
+                    {String(index + 1).padStart(2, '0')}
+                </span>
+            </div>
+
+            <div style={{ flex: 1, padding: '18px 20px 20px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <h3 style={{ fontFamily: 'var(--font-montserrat)', fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em', }}>
+                    {project?.title}
+                </h3>
+
+                <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.65, flex: 1, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', }}>
+                    {project?.description}
+                </p>
+
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
+                    {project?.tags.slice(0, 3).map(tag => (
+                        <span key={tag} style={{ fontFamily: 'var(--font-montserrat)', fontSize: '0.58rem', fontWeight: 700, letterSpacing: '0.08em', padding: '2px 8px', background: hovered ? 'rgba(192,38,211,0.1)' : 'rgba(192,38,211,0.05)', border: `1px solid ${hovered ? 'rgba(192,38,211,0.3)' : 'rgba(192,38,211,0.1)'}`, color: hovered ? 'var(--accent-light)' : 'var(--text-muted)', borderRadius: 100, transition: 'all 0.2s ease', }}>
+                            {tag}
+                        </span>
+                    ))}
+                </div>
+
+                <a href={project?.url} target="_blank" rel="noopener noreferrer" style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '9px 14px', marginTop: 4, fontFamily: 'var(--font-montserrat)', fontSize: '0.68rem',
+                    fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: 'var(--radius-sm)', color: hovered ? '#fff' : 'var(--text-muted)', transition: 'all 0.25s ease',
+                    background: hovered ? 'linear-gradient(135deg, var(--accent), var(--accent2))' : 'rgba(255,255,255,0.03)', border: `1px solid ${hovered ? 'transparent' : 'rgba(192,38,211,0.15)'}`,
+                }}
+                >
+                    View Project
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.8">
+                        <path d="M2 10L10 2M10 2H4M10 2v6" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                </a>
+            </div>
+
+            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 2, background: 'linear-gradient(90deg, var(--accent), var(--accent2), transparent)', opacity: hovered ? 1 : 0, transition: 'opacity 0.3s ease', }} />
+        </motion.div>
+    );
+}
+
+/* ── Main section ─────────────────────────────────────────────────────────── */
+export default function Project() {
+    const sectionRef = useRef(null);
+    const isInView = useInView(sectionRef, { once: false, amount: 0.08 });
+    const [filter, setFilter] = useState('all');
+    const [showAll, setShowAll] = useState(false);
+    const filtered = filter === 'all' ? projects : projects.filter(p => p.category === filter);
+    const displayed = showAll ? filtered : filtered.slice(0, INITIAL_COUNT);
+    const hasMore = filtered.length > INITIAL_COUNT && !showAll;
+    const handleFilter = (id) => { setFilter(id); setShowAll(false); };
+
+    return (
+        <section ref={sectionRef} className="relative w-full py-24 px-6 overflow-hidden" style={{ backgroundColor: 'var(--bg-base)', borderTop: '1px solid var(--border-solid)' }}>
+            <Blob style={{ width: 500, height: 500, top: -100, left: -150, background: 'rgba(125,42,232,0.07)' }} />
+            <Blob style={{ width: 400, height: 400, bottom: 0, right: -100, background: 'rgba(0,217,255,0.05)' }} />
+            <Blob style={{ width: 300, height: 300, top: '40%', left: '45%', background: 'rgba(192,38,211,0.04)' }} />
+            <div style={{ position: 'absolute', inset: 0, zIndex: 0, pointerEvents: 'none', backgroundImage: 'radial-gradient(circle, rgba(192,38,211,0.12) 1px, transparent 1px)', backgroundSize: '32px 32px', maskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%)', }} />
+
+            <div className="relative z-10 max-w-7xl mx-auto">
+                <motion.div initial={{ opacity: 0, y: -20 }} animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }} transition={{ type: 'spring', stiffness: 80, damping: 18 }} style={{ marginBottom: 48 }}>
+                    <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16, marginBottom: 28 }}>
+                        <div>
+                            <p className="section-label" style={{ color: 'var(--accent-light)', marginBottom: 10 }}>Selected Work</p>
+                            <h2 style={{ fontFamily: 'var(--font-montserrat)', fontSize: 'clamp(2.6rem, 6vw, 4.5rem)', fontWeight: 800, letterSpacing: '-0.04em', lineHeight: 1, color: 'var(--text-primary)', }}>
+                                Projects &amp;{' '}
+                                <span className="gradient-text" style={{ fontWeight: 800 }}>Builds</span>
+                            </h2>
                         </div>
+
+                        <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={isInView ? { opacity: 1, scale: 1 } : {}} transition={{ delay: 0.3 }} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4, }}>
+                            <span style={{ fontFamily: 'var(--font-montserrat)', fontSize: '3rem', fontWeight: 900, lineHeight: 1, color: 'rgba(192,38,211,0.15)', letterSpacing: '-0.04em', }}>
+                                {String(projects.length).padStart(2, '0')}
+                            </span>
+                            <span style={{ fontFamily: 'var(--font-montserrat)', fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--text-muted)', }}>
+                                Total Projects
+                            </span>
+                        </motion.div>
+                    </div>
+
+                    <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                        {categories.map(cat => (
+                            <motion.button
+                                key={cat.id}
+                                onClick={() => handleFilter(cat.id)}
+                                whileHover={{ scale: 1.04 }}
+                                whileTap={{ scale: 0.96 }}
+                                style={{ padding: '7px 18px', borderRadius: 100, fontFamily: 'var(--font-montserrat)', fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', cursor: 'pointer', border: 'none', transition: 'all 0.2s ease', ...(filter === cat.id ? { background: 'linear-gradient(135deg, var(--accent), var(--accent2))', color: '#fff', boxShadow: '0 0 18px rgba(192,38,211,0.35)' } : { background: 'rgba(5,5,12,0.6)', border: '1px solid rgba(192,38,211,0.15)', color: 'var(--text-secondary)' }), }}
+                            >
+                                {cat.label}
+                                <span style={{ marginLeft: 6, fontSize: '0.6rem', opacity: filter === cat.id ? 0.8 : 0.4, }}>
+                                    {cat.id === 'all' ? projects.length : projects.filter(p => p.category === cat.id).length}
+                                </span>
+                            </motion.button>
+                        ))}
                     </div>
                 </motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {filtered?.map((project, index) => (
-                        <motion.div key={project?.title} initial={{ opacity: 0, y: 40 }} animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }} transition={{ type: 'spring', stiffness: 70, damping: 18, delay: index * 0.06 }} onMouseEnter={() => setHovered(index)} onMouseLeave={() => setHovered(null)} className="group cursor-pointer">
-                            <motion.div className="glass overflow-hidden h-full flex flex-col" style={{ borderRadius: 'var(--radius-md)', transition: 'box-shadow 0.25s ease, transform 0.25s ease', boxShadow: hovered === index ? '0 0 0 1px rgba(232,103,58,0.45), 0 0 40px rgba(232,103,58,0.12), inset 0 1px 0 rgba(232,103,58,0.2)' : '0 0 0 1px var(--border)', transform: hovered === index ? 'scale(1.018) translateY(-3px)' : 'scale(1)', }}>
-                                <div className="relative h-48 overflow-hidden" style={{ background: '#111' }}>
-                                    <Image src={project?.image} alt={project?.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
-                                    <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(10,10,10,0.85) 0%, transparent 50%)' }} />
-                                    <span style={{ position: 'absolute', top: 12, right: 12, fontFamily: 'var(--font-dm-mono)', fontSize: '0.65rem', letterSpacing: '0.1em', textTransform: 'uppercase', padding: '3px 10px', background: 'rgba(10,10,10,0.75)', backdropFilter: 'blur(8px)', border: '1px solid var(--border)', color: 'var(--text-secondary)', borderRadius: 'var(--radius-sm)', }}>
-                                        {project?.category}
-                                    </span>
-                                </div>
+                <AnimatePresence mode="popLayout">
+                    <motion.div key={filter} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {displayed?.map((project, index) => (
+                            <ProjectCard key={project?.title} project={project} index={index} />
+                        ))}
+                    </motion.div>
+                </AnimatePresence>
 
-                                <div className="flex-1 p-5 flex flex-col gap-3">
-                                    <h3 style={{ fontFamily: 'var(--font-playfair)', fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
-                                        {project?.title}
-                                    </h3>
-                                    <p style={{ fontFamily: 'var(--font-dm-sans)', fontSize: '0.875rem', color: 'var(--text-secondary)', lineHeight: 1.65, flex: 1 }}>
-                                        {project?.description}
-                                    </p>
+                <AnimatePresence>
+                    {(hasMore || showAll) && (
+                        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ delay: 0.2 }} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12, marginTop: 40 }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 16, width: '100%', maxWidth: 400 }}>
+                                <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg, transparent, rgba(192,38,211,0.25))' }} />
+                                <span style={{ fontFamily: 'var(--font-montserrat)', fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--text-muted)', }}>
+                                    {showAll ? `All ${filtered.length} shown` : `${INITIAL_COUNT} of ${filtered.length}`}
+                                </span>
+                                <div style={{ flex: 1, height: 1, background: 'linear-gradient(90deg, rgba(192,38,211,0.25), transparent)' }} />
+                            </div>
 
-                                    <div className="flex flex-wrap gap-2">
-                                        {project?.tags.map(tag => (
-                                            <span key={tag} style={{ fontFamily: 'var(--font-dm-mono)', fontSize: '0.65rem', padding: '2px 8px', letterSpacing: '0.07em', background: 'rgba(255,255,255,0.04)', border: '1px solid var(--border)', color: 'var(--text-muted)', borderRadius: 'var(--radius-sm)', }}>
-                                                {tag}
-                                            </span>
-                                        ))}
-                                    </div>
-
-                                    <a href={project?.url} target="_blank" rel="noopener noreferrer"
-                                        style={{ display: 'block', textAlign: 'center', padding: '9px', fontFamily: 'var(--font-dm-mono)', fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.08em', textTransform: 'uppercase', textDecoration: 'none', borderRadius: 'var(--radius-sm)', marginTop: 4, background: hovered === index ? 'var(--accent)' : 'rgba(255,255,255,0.04)', border: `1px solid ${hovered === index ? 'var(--accent)' : 'var(--border)'}`, color: hovered === index ? '#fff' : 'var(--text-secondary)', transition: 'all 0.2s ease', }}>
-                                        View Project →
-                                    </a>
-                                </div>
-                            </motion.div>
+                            <motion.button
+                                onClick={() => setShowAll(v => !v)}
+                                whileHover={{ scale: 1.04, boxShadow: '0 0 24px rgba(192,38,211,0.3)' }}
+                                whileTap={{ scale: 0.97 }}
+                                style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '12px 32px', background: 'rgba(5,5,12,0.7)', border: '1px solid rgba(192,38,211,0.3)', borderRadius: 100, fontFamily: 'var(--font-montserrat)', fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--accent-light)', cursor: 'pointer', backdropFilter: 'blur(8px)', transition: 'all 0.25s ease', }}
+                            >
+                                {showAll ? (
+                                    <>Show Less <span style={{ transform: 'rotate(180deg)', display: 'inline-block' }}>↓</span></>
+                                ) : (
+                                    <>View All {filtered.length} Projects ↓</>
+                                )}
+                            </motion.button>
                         </motion.div>
-                    ))}
-                </div>
+                    )}
+                </AnimatePresence>
             </div>
         </section>
     );

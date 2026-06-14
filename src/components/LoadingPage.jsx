@@ -21,7 +21,7 @@ export default function LoadingPage({ onLoadingComplete }) {
                 }
                 return prev + Math.random() * 8;
             });
-        }, 200);
+        }, 120);
 
         return () => clearInterval(interval);
     }, [isLoading, onLoadingComplete]);
@@ -35,33 +35,33 @@ export default function LoadingPage({ onLoadingComplete }) {
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.8, ease: 'easeInOut' }}
                     className="fixed inset-0 z-50 flex items-center justify-center"
-                    style={{ backgroundColor: 'var(--bg-base)' }}
+                    style={{ backgroundColor: '#020205' }}
                 >
                     <div className="relative w-full h-full flex flex-col items-center justify-center">
-                        {/* Animated background - mist green gradients */}
+                        {/* Animated background - space purple gradients */}
                         <motion.div
                             className="absolute inset-0 pointer-events-none"
                             animate={{
                                 background: [
-                                    'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(123,161,133,0.1) 0%, transparent 70%)',
-                                    'radial-gradient(ellipse 80% 60% at 40% 60%, rgba(123,161,133,0.08) 0%, transparent 70%)',
-                                    'radial-gradient(ellipse 80% 60% at 60% 40%, rgba(123,161,133,0.08) 0%, transparent 70%)',
-                                    'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(123,161,133,0.1) 0%, transparent 70%)',
+                                    'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(192,38,211,0.06) 0%, transparent 70%)',
+                                    'radial-gradient(ellipse 80% 60% at 40% 60%, rgba(6,182,212,0.05) 0%, transparent 70%)',
+                                    'radial-gradient(ellipse 80% 60% at 60% 40%, rgba(192,38,211,0.05) 0%, transparent 70%)',
+                                    'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(192,38,211,0.06) 0%, transparent 70%)',
                                 ],
                             }}
                             transition={{ duration: 8, repeat: Infinity }}
                         />
 
-                        {/* Animated orbs - forest mist */}
+                        {/* Animated orbs - space mist */}
                         <motion.div
                             className="absolute top-20 right-32 w-72 h-72 rounded-full pointer-events-none"
                             style={{
-                                background: 'radial-gradient(circle, rgba(123,161,133,0.1) 0%, transparent 70%)',
+                                background: 'radial-gradient(circle, rgba(192,38,211,0.08) 0%, transparent 70%)',
                                 filter: 'blur(80px)',
                             }}
                             animate={{
-                                x: [0, 50, -30, 0],
-                                y: [0, -50, 30, 0],
+                                x: [0, 40, -20, 0],
+                                y: [0, -40, 20, 0],
                             }}
                             transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
                         />
@@ -69,12 +69,12 @@ export default function LoadingPage({ onLoadingComplete }) {
                         <motion.div
                             className="absolute bottom-32 left-20 w-80 h-80 rounded-full pointer-events-none"
                             style={{
-                                background: 'radial-gradient(circle, rgba(123,161,133,0.08) 0%, transparent 70%)',
+                                background: 'radial-gradient(circle, rgba(6,182,212,0.06) 0%, transparent 70%)',
                                 filter: 'blur(80px)',
                             }}
                             animate={{
-                                x: [0, -50, 30, 0],
-                                y: [0, 50, -30, 0],
+                                x: [0, -40, 20, 0],
+                                y: [0, 40, -20, 0],
                             }}
                             transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
                         />
@@ -89,18 +89,19 @@ export default function LoadingPage({ onLoadingComplete }) {
                             >
                                 <h1
                                     style={{
-                                        fontFamily: 'var(--font-playfair)',
-                                        fontSize: 'clamp(2rem, 8vw, 4rem)',
-                                        fontWeight: 700,
-                                        letterSpacing: '-0.02em',
+                                        fontFamily: 'var(--font-montserrat)',
+                                        fontSize: 'clamp(2.2rem, 8vw, 4.2rem)',
+                                        fontWeight: 900,
+                                        letterSpacing: '-0.03em',
                                         color: 'var(--text-primary)',
+                                        textTransform: 'uppercase'
                                     }}
                                 >
-                                    Vishnu
+                                    VISHNU<span style={{ color: 'var(--accent-light)' }}>.</span>
                                 </h1>
                                 <motion.div
-                                    className="h-1 mt-4 rounded-full"
-                                    style={{ background: 'var(--accent)' }}
+                                    className="h-0.5 mt-4 rounded-full"
+                                    style={{ background: 'linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 100%)', boxShadow: '0 0 10px var(--accent)' }}
                                     initial={{ scaleX: 0 }}
                                     animate={{ scaleX: 1 }}
                                     transition={{ duration: 1, delay: 0.3, ease: 'easeOut' }}
@@ -113,8 +114,8 @@ export default function LoadingPage({ onLoadingComplete }) {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.8, delay: 0.2 }}
                                 style={{
-                                    fontFamily: 'var(--font-dm-sans)',
-                                    fontSize: 'clamp(0.9rem, 2vw, 1.2rem)',
+                                    fontFamily: 'var(--font-sans)',
+                                    fontSize: 'clamp(0.85rem, 2vw, 1.15rem)',
                                     color: 'var(--text-secondary)',
                                     letterSpacing: '0.05em',
                                     maxWidth: '500px',
@@ -129,7 +130,7 @@ export default function LoadingPage({ onLoadingComplete }) {
                                 <div
                                     style={{
                                         width: '200px',
-                                        height: '3px',
+                                        height: '2px',
                                         background: 'rgba(255,255,255,0.06)',
                                         borderRadius: '2px',
                                         overflow: 'hidden',
@@ -139,7 +140,7 @@ export default function LoadingPage({ onLoadingComplete }) {
                                     <motion.div
                                         style={{
                                             height: '100%',
-                                            background: 'linear-gradient(90deg, var(--accent) 0%, rgba(123,161,133,0.5) 100%)',
+                                            background: 'linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 100%)',
                                             width: `${Math.min(count, 100)}%`,
                                         }}
                                         transition={{ duration: 0.2 }}
@@ -149,8 +150,9 @@ export default function LoadingPage({ onLoadingComplete }) {
                                 {/* Loading text */}
                                 <motion.p
                                     style={{
-                                        fontFamily: 'var(--font-dm-mono)',
+                                        fontFamily: 'var(--font-montserrat)',
                                         fontSize: '0.85rem',
+                                        fontWeight: 700,
                                         color: 'var(--text-muted)',
                                         letterSpacing: '0.1em',
                                     }}
@@ -172,36 +174,37 @@ export default function LoadingPage({ onLoadingComplete }) {
                                     animate={{ y: [0, 8, 0] }}
                                     transition={{ duration: 1.5, repeat: Infinity }}
                                     style={{
-                                        fontFamily: 'var(--font-dm-mono)',
+                                        fontFamily: 'var(--font-montserrat)',
                                         fontSize: '0.75rem',
+                                        fontWeight: 700,
                                         color: 'var(--text-muted)',
-                                        letterSpacing: '0.1em',
+                                        letterSpacing: '0.15em',
                                     }}
                                 >
-                                    ENTER PORTFOLIO
+                                    INITIALIZING ORBITS
                                 </motion.div>
                             </motion.div>
                         </div>
 
-                        {/* Animated leaf particles background */}
+                        {/* Animated star particles background */}
                         <div className="absolute inset-0 pointer-events-none">
-                            {[...Array(12)].map((_, i) => (
+                            {[...Array(15)].map((_, i) => (
                                 <motion.div
                                     key={i}
-                                    className="absolute w-1 h-1 rounded-full"
-                                    style={{ background: 'rgba(123,161,133,0.3)' }}
+                                    className="absolute w-[2px] h-[2px] rounded-full"
+                                    style={{ background: i % 2 === 0 ? 'var(--accent-light)' : 'rgba(255,255,255,0.7)' }}
                                     initial={{
                                         x: Math.random() * 100 + '%',
                                         y: Math.random() * 100 + '%',
                                     }}
                                     animate={{
-                                        y: [0, -400, 0],
+                                        scale: [0.2, 1.2, 0.2],
                                         opacity: [0, 1, 0],
                                     }}
                                     transition={{
-                                        duration: 3 + Math.random() * 2,
+                                        duration: 2 + Math.random() * 3,
                                         repeat: Infinity,
-                                        delay: i * 0.2,
+                                        delay: i * 0.15,
                                     }}
                                 />
                             ))}

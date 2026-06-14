@@ -82,30 +82,31 @@ function ContactForm() {
 
     const inputStyle = (field) => ({
         width: '100%', padding: '13px 16px',
-        background: 'rgba(255,255,255,0.03)',
-        border: `1px solid ${errors[field] ? '#c44444' : 'var(--border-solid)'}`,
+        background: 'rgba(5, 5, 12, 0.45)',
+        border: `1px solid ${errors[field] ? '#ef4444' : 'var(--border-solid)'}`,
         borderRadius: 'var(--radius-sm)',
         color: 'var(--text-primary)',
-        fontFamily: 'var(--font-dm-sans)', fontSize: '0.9rem',
+        fontFamily: 'var(--font-sans)', fontSize: '0.9rem',
         outline: 'none', marginBottom: errors[field] ? 4 : 16,
-        transition: 'border-color 0.2s',
+        transition: 'all 0.2s',
     });
 
     const labelStyle = {
         display: 'block',
-        fontFamily: 'var(--font-dm-mono)', fontSize: '0.68rem',
+        fontFamily: 'var(--font-montserrat)', fontSize: '0.68rem',
+        fontWeight: 700,
         color: 'var(--text-muted)', letterSpacing: '0.12em',
         textTransform: 'uppercase', marginBottom: 8,
     };
 
     if (status === 'sent') return (
-        <div style={{ textAlign: 'center', padding: '48px 24px' }}>
-            <div style={{ fontSize: 48, marginBottom: 20 }}>✉️</div>
-            <h3 style={{ fontFamily: 'var(--font-playfair)', fontSize: '1.75rem', fontWeight: 700, marginBottom: 12, color: 'var(--text-primary)' }}>
-                Message Sent!
+        <div style={{ textAlign: 'center', padding: '48px 24px' }} className="glass rounded-xl border border-[rgba(192,38,211,0.2)]">
+            <div style={{ fontSize: 48, marginBottom: 20 }}>🛸</div>
+            <h3 style={{ fontFamily: 'var(--font-montserrat)', fontSize: '1.75rem', fontWeight: 800, marginBottom: 12, color: 'var(--text-primary)' }}>
+                Message Transmitted!
             </h3>
-            <p style={{ fontFamily: 'var(--font-dm-sans)', color: 'var(--text-secondary)', lineHeight: 1.7 }}>
-                Thanks for reaching out. I'll get back to you within 24 hours.
+            <p style={{ fontFamily: 'var(--font-sans)', color: 'var(--text-secondary)', lineHeight: 1.7 }}>
+                Signal received successfully. I will respond to your coordinates within 24 hours.
             </p>
         </div>
     );
@@ -114,13 +115,13 @@ function ContactForm() {
         <div style={{ display: 'flex', flexDirection: 'column' }}>
             {/* Name */}
             <label style={labelStyle}>Your Name</label>
-            <input style={inputStyle('name')} placeholder="Wicky" value={form.name} onFocus={e => { e.target.style.borderColor = 'var(--accent)'; }} onBlur={e => { e.target.style.borderColor = errors.name ? '#c44444' : 'var(--border-solid)'; }} onChange={e => { setForm(f => ({ ...f, name: e.target.value })); setErrors(er => ({ ...er, name: '' })); }} />
-            {errors.name && <span style={{ fontFamily: 'var(--font-dm-mono)', fontSize: '0.7rem', color: '#c44444', marginBottom: 12 }}>{errors.name}</span>}
+            <input style={inputStyle('name')} placeholder="Wicky" value={form.name} onFocus={e => { e.target.style.borderColor = 'var(--accent-light)'; e.target.style.boxShadow = '0 0 10px rgba(6,182,212,0.15)'; }} onBlur={e => { e.target.style.borderColor = errors.name ? '#ef4444' : 'var(--border-solid)'; e.target.style.boxShadow = 'none'; }} onChange={e => { setForm(f => ({ ...f, name: e.target.value })); setErrors(er => ({ ...er, name: '' })); }} />
+            {errors.name && <span style={{ fontFamily: 'var(--font-montserrat)', fontSize: '0.7rem', fontWeight: 600, color: '#ef4444', marginBottom: 12 }}>{errors.name}</span>}
 
             {/* Email */}
             <label style={labelStyle}>Email</label>
-            <input type="email" style={inputStyle('email')} placeholder="wicky@company.com" value={form.email} onFocus={e => { e.target.style.borderColor = 'var(--accent)'; }} onBlur={e => { e.target.style.borderColor = errors.email ? '#c44444' : 'var(--border-solid)'; }} onChange={e => { setForm(f => ({ ...f, email: e.target.value })); setErrors(er => ({ ...er, email: '' })); }} />
-            {errors.email && <span style={{ fontFamily: 'var(--font-dm-mono)', fontSize: '0.7rem', color: '#c44444', marginBottom: 12 }}>{errors.email}</span>}
+            <input type="email" style={inputStyle('email')} placeholder="wicky@company.com" value={form.email} onFocus={e => { e.target.style.borderColor = 'var(--accent-light)'; e.target.style.boxShadow = '0 0 10px rgba(6,182,212,0.15)'; }} onBlur={e => { e.target.style.borderColor = errors.email ? '#ef4444' : 'var(--border-solid)'; e.target.style.boxShadow = 'none'; }} onChange={e => { setForm(f => ({ ...f, email: e.target.value })); setErrors(er => ({ ...er, email: '' })); }} />
+            {errors.email && <span style={{ fontFamily: 'var(--font-montserrat)', fontSize: '0.7rem', fontWeight: 600, color: '#ef4444', marginBottom: 12 }}>{errors.email}</span>}
 
             {/* Project type */}
             <label style={labelStyle}>Project Type</label>
@@ -129,11 +130,11 @@ function ContactForm() {
                     onClick={() => { if (status !== 'sending') setIsOpen(!isOpen); }}
                     style={{
                         width: '100%', padding: '13px 16px',
-                        background: 'rgba(255,255,255,0.03)',
-                        border: `1px solid ${errors.type ? '#c44444' : (isOpen ? 'var(--accent)' : 'var(--border-solid)')}`,
+                        background: 'rgba(5, 5, 12, 0.45)',
+                        border: `1px solid ${errors.type ? '#ef4444' : (isOpen ? 'var(--accent-light)' : 'var(--border-solid)')}`,
                         borderRadius: 'var(--radius-sm)',
                         color: form.type ? 'var(--text-primary)' : 'var(--text-muted)',
-                        fontFamily: 'var(--font-dm-sans)', fontSize: '0.9rem',
+                        fontFamily: 'var(--font-sans)', fontSize: '0.9rem',
                         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                         cursor: status === 'sending' ? 'default' : 'pointer',
                         userSelect: 'none',
@@ -163,11 +164,11 @@ function ContactForm() {
                                 top: '100%',
                                 left: 0, right: 0,
                                 zIndex: 50,
-                                background: 'rgba(18,18,18,0.92)',
+                                background: 'rgba(5, 5, 12, 0.92)',
                                 backdropFilter: 'blur(20px)',
-                                border: '1px solid var(--border-solid2)',
+                                border: '1px solid rgba(192, 38, 211, 0.2)',
                                 borderRadius: 'var(--radius-sm)',
-                                boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
+                                boxShadow: '0 10px 30px rgba(0,0,0,0.65), 0 0 15px rgba(192,38,211,0.05)',
                                 overflow: 'hidden',
                                 padding: '6px',
                             }}
@@ -188,7 +189,7 @@ function ContactForm() {
                                             display: 'flex',
                                             justifyContent: 'space-between',
                                             alignItems: 'center',
-                                            background: isSelected ? 'var(--accent-muted)' : 'transparent',
+                                            background: isSelected ? 'rgba(192, 38, 211, 0.12)' : 'transparent',
                                             transition: 'background 0.2s',
                                         }}
                                         onMouseEnter={(e) => {
@@ -199,17 +200,18 @@ function ContactForm() {
                                         }}
                                     >
                                         <span style={{
-                                            fontFamily: 'var(--font-dm-sans)',
+                                            fontFamily: 'var(--font-sans)',
                                             fontSize: '0.85rem',
                                             color: isSelected ? 'var(--accent)' : 'var(--text-primary)',
-                                            fontWeight: isSelected ? 500 : 400,
+                                            fontWeight: isSelected ? 700 : 400,
                                         }}>
                                             {option.label}
                                         </span>
                                         {option.price && (
                                             <span style={{
-                                                fontFamily: 'var(--font-dm-mono)',
+                                                fontFamily: 'var(--font-montserrat)',
                                                 fontSize: '0.72rem',
+                                                fontWeight: 700,
                                                 color: isSelected ? 'var(--accent)' : 'var(--text-muted)',
                                             }}>
                                                 {option.price}
@@ -225,14 +227,14 @@ function ContactForm() {
 
             {/* Message */}
             <label style={labelStyle}>Tell me about your project</label>
-            <textarea style={{ ...inputStyle('message'), resize: 'none', minHeight: 100 }} placeholder="What are you building? Timeline, budget…" value={form.message} onFocus={e => { e.target.style.borderColor = 'var(--accent)'; }} onBlur={e => { e.target.style.borderColor = errors.message ? '#c44444' : 'var(--border-solid)'; }} onChange={e => { setForm(f => ({ ...f, message: e.target.value })); setErrors(er => ({ ...er, message: '' })); }} />
-            {errors.message && <span style={{ fontFamily: 'var(--font-dm-mono)', fontSize: '0.7rem', color: '#c44444', marginBottom: 12 }}>{errors.message}</span>}
+            <textarea style={{ ...inputStyle('message'), resize: 'none', minHeight: 100 }} placeholder="What are you building? Timeline, budget…" value={form.message} onFocus={e => { e.target.style.borderColor = 'var(--accent-light)'; e.target.style.boxShadow = '0 0 10px rgba(6,182,212,0.15)'; }} onBlur={e => { e.target.style.borderColor = errors.message ? '#ef4444' : 'var(--border-solid)'; e.target.style.boxShadow = 'none'; }} onChange={e => { setForm(f => ({ ...f, message: e.target.value })); setErrors(er => ({ ...er, message: '' })); }} />
+            {errors.message && <span style={{ fontFamily: 'var(--font-montserrat)', fontSize: '0.7rem', fontWeight: 600, color: '#ef4444', marginBottom: 12 }}>{errors.message}</span>}
 
             {/* Submit */}
             <button
                 onClick={handleSubmit}
                 disabled={status === 'sending'}
-                style={{ padding: '14px', background: 'var(--accent)', color: '#fff', border: 'none', borderRadius: 'var(--radius-sm)', fontFamily: 'var(--font-dm-sans)', fontSize: '0.9rem', fontWeight: 500, cursor: status === 'sending' ? 'default' : 'pointer', opacity: status === 'sending' ? 0.55 : 1, transition: 'opacity 0.2s, transform 0.2s', marginTop: 4, }}
+                style={{ padding: '14px', background: 'linear-gradient(135deg, var(--accent), var(--accent2))', color: '#fff', border: 'none', borderRadius: 'var(--radius-sm)', fontFamily: 'var(--font-montserrat)', fontSize: '0.9rem', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', cursor: status === 'sending' ? 'default' : 'pointer', opacity: status === 'sending' ? 0.55 : 1, transition: 'opacity 0.2s, transform 0.2s', marginTop: 4, boxShadow: '0 4px 15px rgba(192,38,211,0.2)' }}
                 onMouseEnter={e => { if (status !== 'sending') e.target.style.transform = 'translateY(-1px)'; }}
                 onMouseLeave={e => { e.target.style.transform = 'none'; }}
             >
@@ -247,27 +249,28 @@ export default function Contact() {
 
     return (
         <section ref={sectionRef} className="relative w-full h-full min-h-screen flex items-center py-24 px-6 overflow-hidden" style={{ backgroundColor: 'var(--bg-base)', borderTop: '1px solid var(--border-solid)' }}>
-            <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 100%, rgba(232,103,58,0.07) 0%, transparent 70%)', }} />
+            <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 100%, rgba(192, 38, 211, 0.05) 0%, transparent 70%)', }} />
+            
             <motion.div variants={containerVariants} initial="hidden" animate={isInView ? 'visible' : 'hidden'} className="relative z-10 w-full max-w-7xl mx-auto">
                 <motion.div variants={itemVariants} className="mb-12 space-y-3">
-                    <p className="section-label">Let's Work Together</p>
-                    <h2 style={{ fontFamily: 'var(--font-playfair)', fontSize: 'clamp(2.8rem, 6vw, 5rem)', fontWeight: 700, letterSpacing: '-0.03em', lineHeight: 1.06, color: 'var(--text-primary)', }}>
-                        Got a project <em style={{ fontStyle: 'italic', color: 'var(--accent)' }}>in mind?</em>
+                    <p className="section-label" style={{ color: 'var(--accent-light)' }}>Let's Work Together</p>
+                    <h2 style={{ fontFamily: 'var(--font-montserrat)', fontSize: 'clamp(2.8rem, 6vw, 4.8rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.05, color: 'var(--text-primary)', }}>
+                        Got a project <span className="gradient-text font-bold" style={{ textShadow: '0 0 15px rgba(192,38,211,0.1)' }}>in mind?</span>
                     </h2>
                 </motion.div>
 
                 <div className="grid md:grid-cols-2 gap-16 lg:gap-24 items-start">
                     <motion.div variants={itemVariants} className="space-y-8">
-                        <p style={{ fontFamily: 'var(--font-dm-sans)', fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.8 }}>
-                            Open to freelance projects, UI consulting, and long-term product work. Based in Chennai — available globally, remote.
+                        <p style={{ fontFamily: 'var(--font-sans)', fontSize: '1rem', color: 'var(--text-secondary)', lineHeight: 1.8 }}>
+                            Open to freelance opportunities, UI/UX consulting, and core frontend roles. Located in Chennai — collaborating globally.
                         </p>
 
                         {/* Email */}
                         <a
                             href="mailto:mcvicky2601@gmail.com"
-                            style={{ display: 'block', fontFamily: 'var(--font-playfair)', fontSize: 'clamp(1.2rem, 2.5vw, 1.8rem)', fontWeight: 700, color: 'var(--accent)', textDecoration: 'none', borderBottom: '2px solid transparent', paddingBottom: 4, transition: 'border-color 0.3s', wordBreak: 'break-all', }}
-                            onMouseEnter={e => { e.target.style.borderColor = 'var(--accent)'; }}
-                            onMouseLeave={e => { e.target.style.borderColor = 'transparent'; }}
+                            style={{ display: 'block', fontFamily: 'var(--font-montserrat)', fontSize: 'clamp(1.2rem, 2.5vw, 1.8rem)', fontWeight: 800, color: 'var(--accent-light)', textDecoration: 'none', borderBottom: '2px solid transparent', paddingBottom: 4, transition: 'all 0.3s', wordBreak: 'break-all', textShadow: '0 0 10px rgba(6,182,212,0.1)' }}
+                            onMouseEnter={e => { e.target.style.color = 'var(--accent)'; e.target.style.borderBottomColor = 'var(--accent)'; }}
+                            onMouseLeave={e => { e.target.style.color = 'var(--accent-light)'; e.target.style.borderBottomColor = 'transparent'; }}
                         >
                             mcvicky2601@gmail.com
                         </a>
@@ -276,7 +279,7 @@ export default function Contact() {
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20 }}>
                             {socials.map(s => (
                                 <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
-                                    style={{ fontFamily: 'var(--font-dm-mono)', fontSize: '0.72rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', textDecoration: 'none', borderBottom: '1px solid transparent', paddingBottom: 2, transition: 'color 0.2s, border-color 0.2s', }}
+                                    style={{ fontFamily: 'var(--font-montserrat)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', textDecoration: 'none', borderBottom: '1px solid transparent', paddingBottom: 2, transition: 'all 0.2s', }}
                                     onMouseEnter={e => { e.target.style.color = 'var(--text-primary)'; e.target.style.borderColor = 'var(--text-muted)'; }}
                                     onMouseLeave={e => { e.target.style.color = 'var(--text-muted)'; e.target.style.borderColor = 'transparent'; }}
                                 >
@@ -285,8 +288,14 @@ export default function Contact() {
                             ))}
                         </div>
 
-                        <div className="availability-pill">
-                            <span className="green-dot" />
+                        <div className="availability-pill" style={{ 
+                            border: '1px solid rgba(74, 222, 128, 0.25)', 
+                            background: 'rgba(74, 222, 128, 0.05)',
+                            color: '#4ade80',
+                            borderRadius: 'var(--radius-sm)',
+                            boxShadow: '0 0 15px rgba(74, 222, 128, 0.05)'
+                        }}>
+                            <span className="green-dot" style={{ background: '#4ade80', boxShadow: '0 0 8px #4ade80' }} />
                             Available for new projects
                         </div>
                     </motion.div>

@@ -9,7 +9,8 @@ export default function ConstellationCanvas({ className = '' }) {
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
         let animId;
-        let mouse = { x: -1000, y: -1000, vx: 0, vy: 0, lastX: 0, lastY: 0 };
+        let mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
+        let time = 0;
 
         const resize = () => {
             canvas.width = canvas.offsetWidth;
@@ -19,124 +20,182 @@ export default function ConstellationCanvas({ className = '' }) {
         const ro = new ResizeObserver(resize);
         ro.observe(canvas);
 
-        // Particle configuration (Leaves)
-        const LEAF_COUNT = 60;
-        const leaves = Array.from({ length: LEAF_COUNT }, () => ({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            length: Math.random() * 8 + 6,
-            width: Math.random() * 4 + 3,
-            vx: Math.random() * 0.7 + 0.3,
-            vy: (Math.random() - 0.5) * 0.2,
-            angle: Math.random() * Math.PI * 2,
-            rotSpeed: (Math.random() - 0.5) * 0.02,
-            swaySpeed: Math.random() * 0.02 + 0.01,
-            swayTime: Math.random() * 100,
-            alpha: Math.random() * 0.35 + 0.15,
-            color: Math.random() > 0.4 ? 'rgba(123, 161, 133, ' : 'rgba(172, 197, 180, ',
-        }));
+        // Center mouse initially
+        mouse.x = window.innerWidth / 2;
+        mouse.y = window.innerHeight / 2;
+        mouse.targetX = mouse.x;
+        mouse.targetY = mouse.y;
 
-        // Wind flow lines
-        const WIND_LINE_COUNT = 6;
-        const windLines = Array.from({ length: WIND_LINE_COUNT }, () => ({
-            points: Array.from({ length: 6 }, (_, idx) => ({ x: 0, y: 0 })),
-            xOffset: Math.random() * 200,
-            yBase: Math.random() * canvas.height,
-            speed: Math.random() * 1.5 + 0.8,
-            width: Math.random() * 1.5 + 0.5,
-            alpha: Math.random() * 0.06 + 0.02,
-        }));
+        // Configure stars
+        const STAR_COUNT = 180;
+        const stars = Array.from({ length: STAR_COUNT }, () => {
+            const depth = Math.random() * 0.9 + 0.1; // 0.1 to 1.0
+            return {
+                x: Math.random() * window.innerWidth * 1.5 - window.innerWidth * 0.25,
+                y: Math.random() * window.innerHeight * 1.5 - window.innerHeight * 0.25,
+                size: Math.random() * 1.8 + 0.4, // size from 0.4px to 2.2px
+                depth: depth,
+                baseOpacity: Math.random() * 0.6 + 0.2,
+                twinkleSpeed: Math.random() * 0.03 + 0.005,
+                twinklePhase: Math.random() * Math.PI * 2,
+                // Space theme star colors (mostly white, some cyan, fuchsia, yellow)
+                color: (() => {
+                    const r = Math.random();
+                    if (r < 0.15) return '192, 38, 211';  // Fuchsia
+                    if (r < 0.3) return '6, 182, 212';    // Cyan
+                    if (r < 0.4) return '234, 179, 8';    // Yellow
+                    return '255, 255, 255';               // White
+                })()
+            };
+        });
+
+        // Configure shooting stars
+        const shootingStars = [];
+        const spawnShootingStar = () => {
+            if (shootingStars.length >= 2) return;
+            
+            shootingStars.push({
+                x: Math.random() * canvas.width * 0.8,
+                y: Math.random() * canvas.height * 0.5,
+                vx: Math.random() * 8 + 6,
+                vy: Math.random() * 4 + 3,
+                length: Math.random() * 80 + 50,
+                opacity: 1,
+                life: 1.0,
+                decay: Math.random() * 0.02 + 0.015,
+                width: Math.random() * 1.5 + 0.8,
+            });
+        };
 
         const onMouseMove = (e) => {
-            const rect = canvas.getBoundingClientRect();
-            const currentX = e.clientX - rect.left;
-            const currentY = e.clientY - rect.top;
-            
-            // Calculate mouse velocity
-            mouse.vx = currentX - mouse.lastX;
-            mouse.vy = currentY - mouse.lastY;
-            mouse.x = currentX;
-            mouse.y = currentY;
-            mouse.lastX = currentX;
-            mouse.lastY = currentY;
+            mouse.targetX = e.clientX;
+            mouse.targetY = e.clientY;
         };
         window.addEventListener('mousemove', onMouseMove);
 
-        const drawLeaf = (x, y, length, width, angle, color, alpha) => {
-            ctx.save();
-            ctx.translate(x, y);
-            ctx.rotate(angle);
-            ctx.beginPath();
-            ctx.moveTo(0, -length / 2);
-            ctx.quadraticCurveTo(width / 2, 0, 0, length / 2);
-            ctx.quadraticCurveTo(-width / 2, 0, 0, -length / 2);
-            ctx.closePath();
-            ctx.fillStyle = `${color}${alpha})`;
-            ctx.fill();
-            ctx.restore();
-        };
-
         const draw = () => {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            time += 0.5;
 
-            // Decelerate mouse velocities
-            mouse.vx *= 0.95;
-            mouse.vy *= 0.95;
+            // Smooth mouse interpolation for parallax lag
+            mouse.x += (mouse.targetX - mouse.x) * 0.08;
+            mouse.y += (mouse.targetY - mouse.y) * 0.08;
 
-            // Draw wind lines
-            for (const wl of windLines) {
-                wl.xOffset += wl.speed;
-                if (wl.xOffset > canvas.width + 300) {
-                    wl.xOffset = -300;
-                    wl.yBase = Math.random() * canvas.height;
-                }
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+
+            // Draw nebula background glow
+            const nebGlow = ctx.createRadialGradient(
+                centerX + (mouse.x - centerX) * 0.05,
+                centerY + (mouse.y - centerY) * 0.05,
+                10,
+                centerX,
+                centerY,
+                canvas.width * 0.7
+            );
+            nebGlow.addColorStop(0, 'rgba(88, 28, 135, 0.04)'); // deep purple
+            nebGlow.addColorStop(0.5, 'rgba(30, 58, 138, 0.03)'); // deep blue
+            nebGlow.addColorStop(1, 'transparent');
+            ctx.fillStyle = nebGlow;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw Stars and calculate their projected positions
+            const projectedStars = stars.map(star => {
+                // Parallax translation: depth drives offset intensity
+                const offsetX = (mouse.x - centerX) * star.depth * 0.03;
+                const offsetY = (mouse.y - centerY) * star.depth * 0.03;
+                
+                let px = star.x + offsetX;
+                let py = star.y + offsetY;
+
+                // Keep stars inside screen boundary with wrapping
+                if (px < -50) px = canvas.width + 50;
+                if (px > canvas.width + 50) px = -50;
+                if (py < -50) py = canvas.height + 50;
+                if (py > canvas.height + 50) py = -50;
+
+                // Update base star coordinates to follow wrapped position
+                star.x = px - offsetX;
+                star.y = py - offsetY;
+
+                // Twinkle effect (sine wave opacity oscillation)
+                const opacity = Math.max(0.05, Math.min(1, 
+                    star.baseOpacity + Math.sin(time * star.twinkleSpeed + star.twinklePhase) * 0.25
+                ));
 
                 ctx.beginPath();
-                ctx.strokeStyle = `rgba(139, 168, 147, ${wl.alpha})`;
-                ctx.lineWidth = wl.width;
-                
-                // Draw curve using quadratic lines
-                for (let i = 0; i < 6; i++) {
-                    const px = wl.xOffset + i * 80 - 150;
-                    const py = wl.yBase + Math.sin((wl.xOffset + i * 40) * 0.01) * 30;
-                    if (i === 0) {
-                        ctx.moveTo(px, py);
-                    } else {
-                        ctx.lineTo(px, py);
+                ctx.arc(px, py, star.size * (1 + (star.depth * 0.2)), 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${star.color}, ${opacity})`;
+                ctx.fill();
+
+                return { x: px, y: py, depth: star.depth, color: star.color };
+            });
+
+            // Draw faint constellation links between close stars of similar depth
+            ctx.lineWidth = 0.5;
+            for (let i = 0; i < projectedStars.length; i++) {
+                for (let j = i + 1; j < projectedStars.length; j++) {
+                    const s1 = projectedStars[i];
+                    const s2 = projectedStars[j];
+
+                    // Check distance
+                    const dx = s1.x - s2.x;
+                    const dy = s1.y - s2.y;
+                    const dist = Math.hypot(dx, dy);
+
+                    if (dist < 90) {
+                        // Check depth similarity to make structures look layered
+                        const depthDiff = Math.abs(s1.depth - s2.depth);
+                        if (depthDiff < 0.25) {
+                            const alpha = (1 - (dist / 90)) * 0.07;
+                            ctx.beginPath();
+                            ctx.moveTo(s1.x, s1.y);
+                            ctx.lineTo(s2.x, s2.y);
+                            ctx.strokeStyle = `rgba(168, 85, 247, ${alpha})`; // faint purple line
+                            ctx.stroke();
+                        }
                     }
                 }
-                ctx.stroke();
             }
 
-            // Draw leaf particles
-            for (const n of leaves) {
-                // Move leaves to the right (simulating wind)
-                n.swayTime += n.swaySpeed;
-                n.x += n.vx;
-                n.y += n.vy + Math.sin(n.swayTime) * 0.25;
-                n.angle += n.rotSpeed;
+            // Draw and update shooting stars
+            for (let i = shootingStars.length - 1; i >= 0; i--) {
+                const ss = shootingStars[i];
+                ss.x += ss.vx;
+                ss.y += ss.vy;
+                ss.life -= ss.decay;
 
-                // Mouse interaction - push leaves away and accelerate them based on mouse velocity
-                const dx = n.x - mouse.x;
-                const dy = n.y - mouse.y;
-                const dist = Math.hypot(dx, dy);
-                if (dist < 120) {
-                    const force = (120 - dist) / 120;
-                    // Add wind gust speed from mouse velocity
-                    n.x += (dx / dist) * force * 4 + mouse.vx * force * 0.15;
-                    n.y += (dy / dist) * force * 4 + mouse.vy * force * 0.15;
-                    n.angle += force * 0.1;
+                if (ss.life <= 0) {
+                    shootingStars.splice(i, 1);
+                    continue;
                 }
 
-                // Wrap-around screen bounds
-                if (n.x > canvas.width + 20) {
-                    n.x = -20;
-                    n.y = Math.random() * canvas.height;
-                }
-                if (n.y < -20) n.y = canvas.height + 20;
-                if (n.y > canvas.height + 20) n.y = -20;
+                // Draw gradient tail
+                const tailGlow = ctx.createLinearGradient(
+                    ss.x, ss.y, 
+                    ss.x - ss.vx * 3, ss.y - ss.vy * 3
+                );
+                tailGlow.addColorStop(0, `rgba(255, 255, 255, ${ss.life * 0.9})`);
+                tailGlow.addColorStop(0.3, `rgba(6, 182, 212, ${ss.life * 0.5})`); // cyan glow
+                tailGlow.addColorStop(1, 'rgba(192, 38, 211, 0)'); // fade to fuchsia transparent
 
-                drawLeaf(n.x, n.y, n.length, n.width, n.angle, n.color, n.alpha);
+                ctx.beginPath();
+                ctx.moveTo(ss.x, ss.y);
+                ctx.lineTo(ss.x - ss.vx * 3, ss.y - ss.vy * 3);
+                ctx.strokeStyle = tailGlow;
+                ctx.lineWidth = ss.width;
+                ctx.stroke();
+
+                // Draw head glow
+                ctx.beginPath();
+                ctx.arc(ss.x, ss.y, ss.width * 1.5, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 255, 255, ${ss.life})`;
+                ctx.fill();
+            }
+
+            // Periodically trigger shooting stars
+            if (Math.random() < 0.003) {
+                spawnShootingStar();
             }
 
             animId = requestAnimationFrame(draw);
