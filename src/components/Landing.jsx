@@ -41,6 +41,12 @@ export default function Landing() {
     const smoothContentOpacity = useSpring(contentOpacity, { stiffness: 50, damping: 20 });
     const smoothContentX = useSpring(contentX, { stiffness: 50, damping: 20 });
     const smoothParallaxX = useSpring(parallaxX, { stiffness: 50, damping: 20 });
+    const videoX = useTransform(scrollMotion, [0, PANEL_END], [0, 400]);
+    const videoY = useTransform(scrollMotion, [0, PANEL_END], [0, -450]);
+    const videoScale = useTransform(scrollMotion, [0, PANEL_END], [1, 1.12]);
+    const smoothVideoX = useSpring(videoX, { stiffness: 40, damping: 18 });
+    const smoothVideoY = useSpring(videoY, { stiffness: 40, damping: 18 });
+    const smoothVideoScale = useSpring(videoScale, { stiffness: 40, damping: 18 });
 
     useEffect(() => { setIsClient(true); }, []);
 
@@ -52,9 +58,9 @@ export default function Landing() {
 
     return (
         <div className="relative w-full min-h-screen overflow-hidden flex items-center" style={{ backgroundColor: 'var(--bg-base)' }}>
-            <video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover pointer-events-none z-0" style={{ opacity: 0.16 }}>
+            <motion.video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover pointer-events-none z-0" style={{ opacity: 0.16, x: smoothVideoX, y: smoothVideoY, scale: smoothVideoScale, }}>
                 <source src="/Space.mp4" type="video/mp4" />
-            </video>
+            </motion.video>
 
             <div className="absolute inset-0 pointer-events-none z-0" style={{ background: `radial-gradient(ellipse 55% 50% at 75% 35%, rgba(125, 42, 232, 0.09) 0%, transparent 70%), radial-gradient(ellipse 45% 45% at 20% 75%, rgba(0, 217, 255, 0.08) 0%, transparent 60%)` }} />
 
