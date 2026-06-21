@@ -6,8 +6,6 @@ import useHorizontalInView from '@/common/useHorizontalInView';
 const socials = [
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/vishnu-muthukumar-0b247021a/' },
     { label: 'GitHub', href: 'https://github.com/Viki2601' },
-    { label: 'Dribbble', href: '#' },
-    { label: 'Instagram', href: '#' },
 ];
 
 const containerVariants = {
@@ -28,10 +26,10 @@ function ContactForm() {
     const selectRef = useRef(null);
 
     const options = [
-        { value: 'Landing Page ($299+)', label: 'Landing Page', price: '$299+' },
-        { value: 'UI Component Pack ($499+)', label: 'UI Component Pack', price: '$499+' },
-        { value: 'Full Web App UI ($999+)', label: 'Full Web App UI', price: '$999+' },
-        { value: 'Animation Sprint ($249+)', label: 'Animation Sprint', price: '$249+' },
+        { value: 'Landing Page ($99+)', label: 'Landing Page', price: '$99+' },
+        { value: 'UI Component Pack ($149+)', label: 'UI Component Pack', price: '$149+' },
+        { value: 'Full Web App UI ($349+)', label: 'Full Web App UI', price: '$349+' },
+        { value: 'Animation Sprint ($79+)', label: 'Animation Sprint', price: '$79+' },
         { value: 'Something Else', label: 'Something Else', price: '' }
     ];
 
@@ -126,28 +124,9 @@ function ContactForm() {
             {/* Project type */}
             <label style={labelStyle}>Project Type</label>
             <div ref={selectRef} style={{ position: 'relative', marginBottom: 16 }}>
-                <div
-                    onClick={() => { if (status !== 'sending') setIsOpen(!isOpen); }}
-                    style={{
-                        width: '100%', padding: '13px 16px',
-                        background: 'rgba(5, 5, 12, 0.45)',
-                        border: `1px solid ${errors.type ? '#ef4444' : (isOpen ? 'var(--accent-light)' : 'var(--border-solid)')}`,
-                        borderRadius: 'var(--radius-sm)',
-                        color: form.type ? 'var(--text-primary)' : 'var(--text-muted)',
-                        fontFamily: 'var(--font-sans)', fontSize: '0.9rem',
-                        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                        cursor: status === 'sending' ? 'default' : 'pointer',
-                        userSelect: 'none',
-                        transition: 'border-color 0.2s, background 0.2s',
-                    }}
-                >
+                <div onClick={() => { if (status !== 'sending') setIsOpen(!isOpen); }} style={{ width: '100%', padding: '13px 16px', background: 'rgba(5, 5, 12, 0.45)', border: `1px solid ${errors.type ? '#ef4444' : (isOpen ? 'var(--accent-light)' : 'var(--border-solid)')}`, borderRadius: 'var(--radius-sm)', color: form.type ? 'var(--text-primary)' : 'var(--text-muted)', fontFamily: 'var(--font-sans)', fontSize: '0.9rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', cursor: status === 'sending' ? 'default' : 'pointer', userSelect: 'none', transition: 'border-color 0.2s, background 0.2s', }}>
                     <span>{form.type ? (options.find(o => o.value === form.type)?.label || form.type) : 'Select a service…'}</span>
-                    <motion.svg
-                        animate={{ rotate: isOpen ? 180 : 0 }}
-                        transition={{ duration: 0.2 }}
-                        width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"
-                        style={{ color: 'var(--text-muted)' }}
-                    >
+                    <motion.svg animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }} width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ color: 'var(--text-muted)' }}>
                         <path d="M2.5 4.5L6 8L9.5 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     </motion.svg>
                 </div>
@@ -159,39 +138,13 @@ function ContactForm() {
                             animate={{ opacity: 1, y: 4, scale: 1 }}
                             exit={{ opacity: 0, y: -8, scale: 0.98 }}
                             transition={{ duration: 0.15, ease: 'easeOut' }}
-                            style={{
-                                position: 'absolute',
-                                top: '100%',
-                                left: 0, right: 0,
-                                zIndex: 50,
-                                background: 'rgba(5, 5, 12, 0.92)',
-                                backdropFilter: 'blur(20px)',
-                                border: '1px solid rgba(192, 38, 211, 0.2)',
-                                borderRadius: 'var(--radius-sm)',
-                                boxShadow: '0 10px 30px rgba(0,0,0,0.65), 0 0 15px rgba(192,38,211,0.05)',
-                                overflow: 'hidden',
-                                padding: '6px',
-                            }}
+                            style={{ position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 50, background: 'rgba(5, 5, 12, 0.92)', backdropFilter: 'blur(20px)', border: '1px solid rgba(192, 38, 211, 0.2)', borderRadius: 'var(--radius-sm)', boxShadow: '0 10px 30px rgba(0,0,0,0.65), 0 0 15px rgba(192,38,211,0.05)', overflow: 'hidden', padding: '6px', }}
                         >
-                            {options.map((option) => {
-                                const isSelected = form.type === option.value;
+                            {options?.map((option) => {
+                                const isSelected = form.type === option?.value;
                                 return (
-                                    <div
-                                        key={option.value}
-                                        onClick={() => {
-                                            setForm(f => ({ ...f, type: option.value }));
-                                            setIsOpen(false);
-                                        }}
-                                        style={{
-                                            padding: '10px 12px',
-                                            borderRadius: 'var(--radius-xs, 4px)',
-                                            cursor: 'pointer',
-                                            display: 'flex',
-                                            justifyContent: 'space-between',
-                                            alignItems: 'center',
-                                            background: isSelected ? 'rgba(192, 38, 211, 0.12)' : 'transparent',
-                                            transition: 'background 0.2s',
-                                        }}
+                                    <div key={option?.value} onClick={() => { setForm(f => ({ ...f, type: option?.value })); setIsOpen(false); }}
+                                        style={{ padding: '10px 12px', borderRadius: 'var(--radius-xs, 4px)', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: isSelected ? 'rgba(192, 38, 211, 0.12)' : 'transparent', transition: 'background 0.2s', }}
                                         onMouseEnter={(e) => {
                                             if (!isSelected) e.currentTarget.style.background = 'rgba(255,255,255,0.05)';
                                         }}
@@ -199,22 +152,12 @@ function ContactForm() {
                                             if (!isSelected) e.currentTarget.style.background = 'transparent';
                                         }}
                                     >
-                                        <span style={{
-                                            fontFamily: 'var(--font-sans)',
-                                            fontSize: '0.85rem',
-                                            color: isSelected ? 'var(--accent)' : 'var(--text-primary)',
-                                            fontWeight: isSelected ? 700 : 400,
-                                        }}>
-                                            {option.label}
+                                        <span style={{ fontFamily: 'var(--font-sans)', fontSize: '0.85rem', color: isSelected ? 'var(--accent)' : 'var(--text-primary)', fontWeight: isSelected ? 700 : 400, }}>
+                                            {option?.label}
                                         </span>
-                                        {option.price && (
-                                            <span style={{
-                                                fontFamily: 'var(--font-montserrat)',
-                                                fontSize: '0.72rem',
-                                                fontWeight: 700,
-                                                color: isSelected ? 'var(--accent)' : 'var(--text-muted)',
-                                            }}>
-                                                {option.price}
+                                        {option?.price && (
+                                            <span style={{ fontFamily: 'var(--font-montserrat)', fontSize: '0.72rem', fontWeight: 700, color: isSelected ? 'var(--accent)' : 'var(--text-muted)', }}>
+                                                {option?.price}
                                             </span>
                                         )}
                                     </div>
@@ -231,13 +174,7 @@ function ContactForm() {
             {errors.message && <span style={{ fontFamily: 'var(--font-montserrat)', fontSize: '0.7rem', fontWeight: 600, color: '#ef4444', marginBottom: 12 }}>{errors.message}</span>}
 
             {/* Submit */}
-            <button
-                onClick={handleSubmit}
-                disabled={status === 'sending'}
-                style={{ padding: '14px', background: 'linear-gradient(135deg, var(--accent), var(--accent2))', color: '#fff', border: 'none', borderRadius: 'var(--radius-sm)', fontFamily: 'var(--font-montserrat)', fontSize: '0.9rem', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', cursor: status === 'sending' ? 'default' : 'pointer', opacity: status === 'sending' ? 0.55 : 1, transition: 'opacity 0.2s, transform 0.2s', marginTop: 4, boxShadow: '0 4px 15px rgba(192,38,211,0.2)' }}
-                onMouseEnter={e => { if (status !== 'sending') e.target.style.transform = 'translateY(-1px)'; }}
-                onMouseLeave={e => { e.target.style.transform = 'none'; }}
-            >
+            <button onClick={handleSubmit} disabled={status === 'sending'} style={{ padding: '14px', background: 'linear-gradient(135deg, var(--accent), var(--accent2))', color: '#fff', border: 'none', borderRadius: 'var(--radius-sm)', fontFamily: 'var(--font-montserrat)', fontSize: '0.9rem', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', cursor: status === 'sending' ? 'default' : 'pointer', opacity: status === 'sending' ? 0.55 : 1, transition: 'opacity 0.2s, transform 0.2s', marginTop: 4, boxShadow: '0 4px 15px rgba(192,38,211,0.2)' }} onMouseEnter={e => { if (status !== 'sending') e.target.style.transform = 'translateY(-1px)'; }} onMouseLeave={e => { e.target.style.transform = 'none'; }}>
                 {status === 'sending' ? 'Sending…' : 'Send Message →'}
             </button>
         </div>
@@ -250,7 +187,7 @@ export default function Contact() {
     return (
         <section ref={sectionRef} className="relative w-full h-full min-h-screen flex items-center py-24 px-6 overflow-hidden" style={{ backgroundColor: 'var(--bg-base)', borderTop: '1px solid var(--border-solid)' }}>
             <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 100%, rgba(192, 38, 211, 0.05) 0%, transparent 70%)', }} />
-            
+
             <motion.div variants={containerVariants} initial="hidden" animate={isInView ? 'visible' : 'hidden'} className="relative z-10 w-full max-w-7xl mx-auto">
                 <motion.div variants={itemVariants} className="mb-12 space-y-3">
                     <p className="section-label" style={{ color: 'var(--accent-light)' }}>Let's Work Together</p>
@@ -266,35 +203,20 @@ export default function Contact() {
                         </p>
 
                         {/* Email */}
-                        <a
-                            href="mailto:mcvicky2601@gmail.com"
-                            style={{ display: 'block', fontFamily: 'var(--font-montserrat)', fontSize: 'clamp(1.2rem, 2.5vw, 1.8rem)', fontWeight: 800, color: 'var(--accent-light)', textDecoration: 'none', borderBottom: '2px solid transparent', paddingBottom: 4, transition: 'all 0.3s', wordBreak: 'break-all', textShadow: '0 0 10px rgba(6,182,212,0.1)' }}
-                            onMouseEnter={e => { e.target.style.color = 'var(--accent)'; e.target.style.borderBottomColor = 'var(--accent)'; }}
-                            onMouseLeave={e => { e.target.style.color = 'var(--accent-light)'; e.target.style.borderBottomColor = 'transparent'; }}
-                        >
+                        <a href="mailto:mcvicky2601@gmail.com" style={{ display: 'block', fontFamily: 'var(--font-montserrat)', fontSize: 'clamp(1.2rem, 2.5vw, 1.8rem)', fontWeight: 800, color: 'var(--accent-light)', textDecoration: 'none', borderBottom: '2px solid transparent', paddingBottom: 4, transition: 'all 0.3s', wordBreak: 'break-all', textShadow: '0 0 10px rgba(6,182,212,0.1)' }} onMouseEnter={e => { e.target.style.color = 'var(--accent)'; e.target.style.borderBottomColor = 'var(--accent)'; }} onMouseLeave={e => { e.target.style.color = 'var(--accent-light)'; e.target.style.borderBottomColor = 'transparent'; }}>
                             mcvicky2601@gmail.com
                         </a>
 
                         {/* Socials */}
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20 }}>
                             {socials.map(s => (
-                                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer"
-                                    style={{ fontFamily: 'var(--font-montserrat)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', textDecoration: 'none', borderBottom: '1px solid transparent', paddingBottom: 2, transition: 'all 0.2s', }}
-                                    onMouseEnter={e => { e.target.style.color = 'var(--text-primary)'; e.target.style.borderColor = 'var(--text-muted)'; }}
-                                    onMouseLeave={e => { e.target.style.color = 'var(--text-muted)'; e.target.style.borderColor = 'transparent'; }}
-                                >
+                                <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" style={{ fontFamily: 'var(--font-montserrat)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', textDecoration: 'none', borderBottom: '1px solid transparent', paddingBottom: 2, transition: 'all 0.2s', }} onMouseEnter={e => { e.target.style.color = 'var(--text-primary)'; e.target.style.borderColor = 'var(--text-muted)'; }} onMouseLeave={e => { e.target.style.color = 'var(--text-muted)'; e.target.style.borderColor = 'transparent'; }}>
                                     {s.label}
                                 </a>
                             ))}
                         </div>
 
-                        <div className="availability-pill" style={{ 
-                            border: '1px solid rgba(74, 222, 128, 0.25)', 
-                            background: 'rgba(74, 222, 128, 0.05)',
-                            color: '#4ade80',
-                            borderRadius: 'var(--radius-sm)',
-                            boxShadow: '0 0 15px rgba(74, 222, 128, 0.05)'
-                        }}>
+                        <div className="availability-pill" style={{ border: '1px solid rgba(74, 222, 128, 0.25)', background: 'rgba(74, 222, 128, 0.05)', color: '#4ade80', borderRadius: 'var(--radius-sm)', boxShadow: '0 0 15px rgba(74, 222, 128, 0.05)' }}>
                             <span className="green-dot" style={{ background: '#4ade80', boxShadow: '0 0 8px #4ade80' }} />
                             Available for new projects
                         </div>

@@ -14,38 +14,17 @@ export default function Home() {
     <>
       <Cursor />
       <main>
-        <HorizontalScroll>
-          <div className="horizontal-scroll__panel" id="hero">
-            <Landing />
-          </div>
-          
-          <div className="horizontal-scroll__panel p-12" id="about">
-            <About />
-          </div>
-          
-          <div className="horizontal-scroll__panel--extra-wide flex-shrink-0" id="journey">
-            <Timeline />
-          </div>
-          
-          <div className="horizontal-scroll__panel p-6 overflow-hidden" id="certificates">
-            <Certificates />
-          </div>
-          
-          <div className="horizontal-scroll__panel flex-shrink-0" id="projects">
-            <Project />
-          </div>
-          
-          <div className="horizontal-scroll__panel w-full md:w-[120vw] flex-shrink-0" id="services">
-            <Services />
-          </div>
-          
+        <HorizontalScroll revealLayer={<FooterName />}>
+          <div className="horizontal-scroll__panel" id="hero"><Landing /></div>
+          <div className="horizontal-scroll__panel p-12" id="about"><About /></div>
+          <div className="horizontal-scroll__panel--extra-wide flex-shrink-0" id="journey"><Timeline /></div>
+          <div className="horizontal-scroll__panel p-6 overflow-hidden" id="certificates"><Certificates /></div>
+          <div className="horizontal-scroll__panel flex-shrink-0" id="projects"><Project /></div>
+          <div className="horizontal-scroll__panel w-full md:w-[120vw] flex-shrink-0" id="services"><Services /></div>
           <div className="horizontal-scroll__panel" id="contact">
-            <Contact />
+            <div className="relative z-10 w-full h-full bg-[var(--bg-base)]"><Contact /></div>
           </div>
-
-          <div className="horizontal-scroll__panel w-full md:w-[60vw] flex-shrink-0" id="footer">
-            <FooterName />
-          </div>
+          <div className="horizontal-scroll__panel flex-shrink-0" id="reveal-spacer" style={{ width: '100vw' }} aria-hidden="true" />
         </HorizontalScroll>
       </main>
     </>
