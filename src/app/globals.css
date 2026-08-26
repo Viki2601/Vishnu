@@ -7,7 +7,7 @@
 ───────────────────────────────────────── */
 :root {
   /* Backgrounds — deep dark matter void */
-  --bg-base: #0a0014;
+  --bg-base: #000000;
   --bg-nav: rgba(10, 0, 20, 0.92);
   --bg-surface: rgba(138, 43, 226, 0.08);
   --bg-surface-hover: rgba(75, 0, 130, 0.12);
@@ -72,7 +72,7 @@ html {
 }
 
 body {
-  background-color: var(--bg-base);
+  background-color: '#000000';
   color: var(--text-primary);
   font-family: var(--font-jura);
   -webkit-font-smoothing: antialiased;

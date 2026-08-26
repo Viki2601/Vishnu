@@ -57,7 +57,7 @@ export default function Landing() {
     if (!isClient) return null;
 
     return (
-        <div className="relative w-full min-h-screen overflow-hidden flex items-center" style={{ backgroundColor: 'var(--bg-accent)' }}>
+        <div className="relative w-full min-h-screen overflow-hidden flex items-center" style={{ backgroundColor: 'var(--bg-base)' }}>
             <motion.video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover pointer-events-none z-0" style={{ opacity: 0.16, x: smoothVideoX, y: smoothVideoY, scale: smoothVideoScale, }}>
                 <source src="/Space.mp4" type="video/mp4" />
             </motion.video>

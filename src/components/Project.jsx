@@ -55,7 +55,7 @@ export default function Project() {
             className="relative h-full flex flex-col"
             style={{
                 width: isHorizontal ? `${PANEL_WIDTH_VW}vw` : '100vw',
-                background: 'var(--bg-accent)',
+                background: 'var(--bg-base)',
                 borderTop: '1px solid var(--border-solid)',
             }}
         >
