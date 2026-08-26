@@ -19,12 +19,12 @@ export default function LayoutClient({ children, fonts }) {
     };
 
     return (
-        <body className={fonts} style={{ fontFamily: 'var(--font-jura), system-ui, sans-serif' }}>
+        <body className={fonts}>
             <SmoothScroll>
                 {children}
             </SmoothScroll>
 
-            {showLoader && (
+            {!showLoader && (
                 <LoadingPage onLoadingComplete={handleLoadingComplete} done={loaderDone} />
             )}
         </body>

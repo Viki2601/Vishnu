@@ -57,7 +57,7 @@ export default function Landing() {
     if (!isClient) return null;
 
     return (
-        <div className="relative w-full min-h-screen overflow-hidden flex items-center" style={{ backgroundColor: 'var(--bg-base)' }}>
+        <div className="relative w-full min-h-screen overflow-hidden flex items-center" style={{ backgroundColor: 'var(--bg-accent)' }}>
             <motion.video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover pointer-events-none z-0" style={{ opacity: 0.16, x: smoothVideoX, y: smoothVideoY, scale: smoothVideoScale, }}>
                 <source src="/Space.mp4" type="video/mp4" />
             </motion.video>
@@ -84,13 +84,13 @@ export default function Landing() {
                             </motion.h1>
 
                             <motion.h2 style={{ fontFamily: 'var(--font-montserrat)', fontSize: 'clamp(1.5rem, 4.2vw, 2.6rem)', fontWeight: 400, letterSpacing: '-0.02em', color: 'var(--text-secondary)', marginTop: '12px', scale: smoothSubTitleScale, x: smoothSubtitleX, y: smoothSubtitleY, display: 'block', }}>
-                                UI Developer
+                                Front-End Developer
                             </motion.h2>
                         </motion.div>
 
                         <motion.div variants={itemVariants} className="w-24 h-[2px]" style={{ background: 'linear-gradient(90deg, var(--accent), var(--accent-light))', boxShadow: '0 0 8px var(--accent)', opacity: smoothContentOpacity, }} />
                         <motion.p variants={itemVariants} className="text-base md:text-lg max-w-md" style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-sans)', lineHeight: 1.75, opacity: smoothContentOpacity, x: smoothContentX, }}>
-                            Crafting high-performance web experiences across the MERN stack — blending engineering precision with immersive cosmic design.
+                             Front-End Developer with hands-on experience building high-performance web experiences across the MERN stack. Currently pursuing BCA (Distance) at University of Madras — actively looking for full-time opportunities.
                         </motion.p>
 
                         <motion.div variants={itemVariants} className="flex flex-wrap gap-4" style={{ opacity: smoothContentOpacity, x: smoothContentX }}>

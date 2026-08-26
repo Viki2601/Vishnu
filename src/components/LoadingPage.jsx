@@ -29,186 +29,39 @@ export default function LoadingPage({ onLoadingComplete }) {
     return (
         <AnimatePresence mode="wait">
             {isLoading && (
-                <motion.div
-                    key="loading"
-                    initial={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.8, ease: 'easeInOut' }}
-                    className="fixed inset-0 z-50 flex items-center justify-center"
-                    style={{ backgroundColor: '#020205' }}
-                >
-                    <div className="relative w-full h-full flex flex-col items-center justify-center">
-                        {/* Animated background - space purple gradients */}
-                        <motion.div
-                            className="absolute inset-0 pointer-events-none"
-                            animate={{
-                                background: [
-                                    'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(192,38,211,0.06) 0%, transparent 70%)',
-                                    'radial-gradient(ellipse 80% 60% at 40% 60%, rgba(6,182,212,0.05) 0%, transparent 70%)',
-                                    'radial-gradient(ellipse 80% 60% at 60% 40%, rgba(192,38,211,0.05) 0%, transparent 70%)',
-                                    'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(192,38,211,0.06) 0%, transparent 70%)',
-                                ],
-                            }}
-                            transition={{ duration: 8, repeat: Infinity }}
-                        />
+                <motion.div key="loading" initial={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.8, ease: 'easeInOut' }} className="fixed inset-0 z-50 overflow-hidden" style={{ backgroundColor: '#11120f', color: '#f4f1e8' }}>
+                    <div className="relative grid h-full w-full grid-cols-1 grid-rows-[auto_1fr_auto] p-6 sm:p-10 lg:p-14" style={{ backgroundImage: 'linear-gradient(rgba(244,241,232,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(244,241,232,0.06) 1px, transparent 1px)', backgroundSize: 'clamp(32px, 5vw, 72px) clamp(32px, 5vw, 72px)' }}>
+                        <header className="relative z-10 flex items-start justify-between border-b border-[#f4f1e8]/20 pb-5">
+                            <span style={{ fontFamily: 'var(--font-dm-mono)', fontSize: '0.7rem', letterSpacing: '0.12em', color: '#a7aa9d' }}>VM / 2026</span>
+                            <span style={{ fontFamily: 'var(--font-dm-mono)', fontSize: '0.7rem', letterSpacing: '0.12em', color: '#a7aa9d' }}>PORTFOLIO_01</span>
+                        </header>
 
-                        {/* Animated orbs - space mist */}
-                        <motion.div
-                            className="absolute top-20 right-32 w-72 h-72 rounded-full pointer-events-none"
-                            style={{
-                                background: 'radial-gradient(circle, rgba(192,38,211,0.08) 0%, transparent 70%)',
-                                filter: 'blur(80px)',
-                            }}
-                            animate={{
-                                x: [0, 40, -20, 0],
-                                y: [0, -40, 20, 0],
-                            }}
-                            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-                        />
-
-                        <motion.div
-                            className="absolute bottom-32 left-20 w-80 h-80 rounded-full pointer-events-none"
-                            style={{
-                                background: 'radial-gradient(circle, rgba(6,182,212,0.06) 0%, transparent 70%)',
-                                filter: 'blur(80px)',
-                            }}
-                            animate={{
-                                x: [0, -40, 20, 0],
-                                y: [0, 40, -20, 0],
-                            }}
-                            transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-                        />
-
-                        {/* Main content */}
-                        <div className="relative z-10 text-center space-y-12">
-                            {/* Logo/Title */}
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.8, ease: 'easeOut' }}
-                            >
-                                <h1
-                                    style={{
-                                        fontFamily: 'var(--font-montserrat)',
-                                        fontSize: 'clamp(2.2rem, 8vw, 4.2rem)',
-                                        fontWeight: 900,
-                                        letterSpacing: '-0.03em',
-                                        color: 'var(--text-primary)',
-                                        textTransform: 'uppercase'
-                                    }}
-                                >
-                                    VISHNU<span style={{ color: 'var(--accent-light)' }}>.</span>
+                        <main className="relative z-10 flex min-h-0 flex-col justify-center py-12 sm:py-16 lg:flex-row lg:items-center lg:justify-between lg:gap-16">
+                            <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, ease: 'easeOut' }}>
+                                <p style={{ fontFamily: 'var(--font-dm-mono)', fontSize: '0.68rem', letterSpacing: '0.18em', color: '#d7ff3f', marginBottom: '1.5rem' }}>DIGITAL CRAFT / 001</p>
+                                <h1 style={{ fontFamily: 'var(--font-montserrat)', fontSize: 'clamp(4rem, 14vw, 12rem)', lineHeight: 0.78, fontWeight: 900, letterSpacing: '-0.08em', color: '#f4f1e8', textTransform: 'uppercase' }}>
+                                    VISH<span style={{ color: '#d7ff3f' }}>NU.</span>
                                 </h1>
-                                <motion.div
-                                    className="h-0.5 mt-4 rounded-full"
-                                    style={{ background: 'linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 100%)', boxShadow: '0 0 10px var(--accent)' }}
-                                    initial={{ scaleX: 0 }}
-                                    animate={{ scaleX: 1 }}
-                                    transition={{ duration: 1, delay: 0.3, ease: 'easeOut' }}
-                                />
                             </motion.div>
 
-                            {/* Tagline */}
-                            <motion.p
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.8, delay: 0.2 }}
-                                style={{
-                                    fontFamily: 'var(--font-sans)',
-                                    fontSize: 'clamp(0.85rem, 2vw, 1.15rem)',
-                                    color: 'var(--text-secondary)',
-                                    letterSpacing: '0.05em',
-                                    maxWidth: '500px',
-                                    lineHeight: 1.6,
-                                }}
-                            >
-                                Crafting Digital Experiences with Code & Creativity
-                            </motion.p>
-
-                            {/* Loading bar container */}
-                            <motion.div className="space-y-4">
-                                <div
-                                    style={{
-                                        width: '200px',
-                                        height: '2px',
-                                        background: 'rgba(255,255,255,0.06)',
-                                        borderRadius: '2px',
-                                        overflow: 'hidden',
-                                        margin: '0 auto',
-                                    }}
-                                >
-                                    <motion.div
-                                        style={{
-                                            height: '100%',
-                                            background: 'linear-gradient(90deg, var(--accent) 0%, var(--accent-light) 100%)',
-                                            width: `${Math.min(count, 100)}%`,
-                                        }}
-                                        transition={{ duration: 0.2 }}
-                                    />
+                            <motion.div className="mt-12 w-full max-w-sm lg:mt-24" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }}>
+                                <div className="mb-5 flex items-end justify-between border-b border-[#f4f1e8]/20 pb-4">
+                                    <p style={{ fontFamily: 'var(--font-sans)', fontSize: 'clamp(1rem, 2vw, 1.25rem)', lineHeight: 1.15, maxWidth: '220px', color: '#f4f1e8' }}>Building interfaces with intent.</p>
+                                    <span style={{ fontFamily: 'var(--font-montserrat)', fontSize: 'clamp(2.2rem, 5vw, 4rem)', lineHeight: 0.8, fontWeight: 800, letterSpacing: '-0.06em', color: '#d7ff3f' }}>{Math.round(Math.min(count, 100))}<small style={{ fontSize: '0.35em', letterSpacing: 0 }}>%</small></span>
                                 </div>
-
-                                {/* Loading text */}
-                                <motion.p
-                                    style={{
-                                        fontFamily: 'var(--font-montserrat)',
-                                        fontSize: '0.85rem',
-                                        fontWeight: 700,
-                                        color: 'var(--text-muted)',
-                                        letterSpacing: '0.1em',
-                                    }}
-                                    animate={{ opacity: [0.5, 1, 0.5] }}
-                                    transition={{ duration: 1.5, repeat: Infinity }}
-                                >
-                                    {Math.round(count)}%
-                                </motion.p>
+                                <div style={{ height: '8px', background: '#292b24', overflow: 'hidden' }}>
+                                    <motion.div style={{ height: '100%', width: `${Math.min(count, 100)}%`, background: '#d7ff3f', transformOrigin: 'left' }} transition={{ duration: 0.2 }} />
+                                </div>
+                                <div className="mt-4 flex justify-between" style={{ fontFamily: 'var(--font-dm-mono)', fontSize: '0.65rem', letterSpacing: '0.1em', color: '#a7aa9d' }}>
+                                    <span>LOADING EXPERIENCE</span><span>PLEASE WAIT</span>
+                                </div>
                             </motion.div>
+                        </main>
 
-                            {/* Animated scroll indicator */}
-                            <motion.div
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ duration: 1, delay: 0.6 }}
-                                className="pt-8"
-                            >
-                                <motion.div
-                                    animate={{ y: [0, 8, 0] }}
-                                    transition={{ duration: 1.5, repeat: Infinity }}
-                                    style={{
-                                        fontFamily: 'var(--font-montserrat)',
-                                        fontSize: '0.75rem',
-                                        fontWeight: 700,
-                                        color: 'var(--text-muted)',
-                                        letterSpacing: '0.15em',
-                                    }}
-                                >
-                                    INITIALIZING ORBITS
-                                </motion.div>
-                            </motion.div>
-                        </div>
-
-                        {/* Animated star particles background */}
-                        <div className="absolute inset-0 pointer-events-none">
-                            {[...Array(15)].map((_, i) => (
-                                <motion.div
-                                    key={i}
-                                    className="absolute w-[2px] h-[2px] rounded-full"
-                                    style={{ background: i % 2 === 0 ? 'var(--accent-light)' : 'rgba(255,255,255,0.7)' }}
-                                    initial={{
-                                        x: Math.random() * 100 + '%',
-                                        y: Math.random() * 100 + '%',
-                                    }}
-                                    animate={{
-                                        scale: [0.2, 1.2, 0.2],
-                                        opacity: [0, 1, 0],
-                                    }}
-                                    transition={{
-                                        duration: 2 + Math.random() * 3,
-                                        repeat: Infinity,
-                                        delay: i * 0.15,
-                                    }}
-                                />
-                            ))}
-                        </div>
+                        <footer className="relative z-10 flex items-end justify-between border-t border-[#f4f1e8]/20 pt-5" style={{ fontFamily: 'var(--font-dm-mono)', fontSize: '0.65rem', letterSpacing: '0.1em', color: '#a7aa9d' }}>
+                            <span>© VISHNU MUTHUKUMAR</span>
+                            <motion.span animate={{ opacity: [0.35, 1, 0.35] }} transition={{ duration: 1.4, repeat: Infinity }} style={{ color: '#d7ff3f' }}>● ONLINE</motion.span>
+                        </footer>
                     </div>
                 </motion.div>
             )}

@@ -12,7 +12,7 @@ export default function FooterName() {
         <footer className="relative w-full h-full flex items-center overflow-hidden py-10" style={{ backgroundImage: `url(${Starwars.src})`, backgroundSize: 'cover', backgroundPosition: 'center center', backgroundRepeat: 'no-repeat', opacity: isHorizontal ? localProgress : 0.95, transform: isHorizontal ? `scale(${1 + localProgress * 0.06})` : 'none', willChange: isHorizontal ? 'opacity, transform' : 'auto', }}>
             <div className="relative w-full max-w-7xl mx-auto px-6 flex flex-col items-center text-center gap-6 z-10">
                 <motion.div initial={{ opacity: 0, y: 80 }} animate={{ opacity: localProgress, y: (1 - localProgress) * 80 }} transition={{ type: 'spring', stiffness: 70, damping: 18 }}>
-                    <p className="select-none leading-none uppercase" style={{ fontFamily: 'var(--font-montserrat)', fontSize: 'clamp(2.5rem, 10vw, 6rem)', fontWeight: 900, letterSpacing: '-0.05em', color: 'rgba(192, 38, 211, 0.68)' }}>
+                    <p className="select-none leading-none uppercase" style={{ fontFamily: 'var(--font-montserrat)', fontSize: 'clamp(2.5rem, 10vw, 6rem)', fontWeight: 900, letterSpacing: '-0.05em', color: '#d7ff3f' }}>
                         Vishnu
                     </p>
                 </motion.div>
@@ -21,7 +21,7 @@ export default function FooterName() {
 
                 <div className="space-y-1.5" style={{ opacity: localProgress }}>
                     <p style={{ fontFamily: 'var(--font-montserrat)', fontSize: '0.68rem', fontWeight: 700, color: 'var(--accent-light)', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
-                        UI Developer · Chennai, India
+                        Front-End Developer · Chennai, India
                     </p>
                     <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
                         Crafting modern web experiences with precision.

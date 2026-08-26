@@ -53,20 +53,27 @@ export const services = [
 ];
 
 export const stats = [
-    { label: 'Status', value: 'Active', color: '#06b6d4' },
-    { label: 'Focus', value: 'UI / Web', color: 'var(--accent)' },
-    { label: 'Stack', value: 'MERN', color: '#c084fc' },
+    { label: 'Status', value: 'Open to Work', color: '#06b6d4' },
+    { label: 'Focus', value: 'UI / Web / Mobile', color: 'var(--accent)' },
+    { label: 'Stack', value: 'React, Next.js, JavaScript', color: '#c084fc' },
     { label: 'Location', value: 'Chennai, IN', color: '#94a3b8' },
 ];
 
 export const timelineData = [
     {
-        title: 'UI Developer',
+        title: 'Bachelor of Computer Applications (BCA)',
+        company: 'University of Madras',
+        date: 'Aug 2026 – Present',
+        description: 'Currently pursuing a Bachelor of Computer Applications (BCA) degree (Distance Learning), focusing on software development, web technologies, and computer science fundamentals.',
+        side: 'left',
+    },
+    {
+        title: 'Front-End Developer',
         company: 'MAI Corporation',
-        date: 'Oct 2024 – Present',
+        date: 'Oct 2024 – Aug-2026',
         description: 'Lead frontend development across multiple live products using Next.js, Redux, and Tailwind CSS. Built reusable component libraries, managed complex Redux state at scale, handled REST API integrations, conducted code reviews, and built a centralized Admin Dashboard across all company products.',
         side: 'right',
-        current: true,
+        // current: true,
     },
     {
         title: 'Web Developer Intern',

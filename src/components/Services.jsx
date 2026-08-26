@@ -27,7 +27,7 @@ function StackedPreviews({ images, hovered }) {
 function ServiceCard({ s, i, hovered, setHovered }) {
     const isHovered = hovered === i;
     return (
-        <div onMouseEnter={() => setHovered(i)} onMouseLeave={() => setHovered(null)} style={{ padding: '24px 28px', background: 'rgba(5, 5, 12, 0.45)', border: '1px solid rgba(192, 38, 211, 0.15)', borderRadius: 'var(--radius-md)', boxShadow: isHovered ? '0 0 20px rgba(6, 182, 212, 0.12)' : 'none', borderColor: isHovered ? 'var(--accent-light)' : 'rgba(192, 38, 211, 0.15)', transition: 'all 0.3s ease', cursor: 'default', position: 'relative', overflow: 'hidden', }} className="w-[310px] flex-shrink-0 flex flex-col justify-between h-[360px]">
+        <div onMouseEnter={() => setHovered(i)} onMouseLeave={() => setHovered(null)} style={{ padding: '24px 28px', background: 'rgba(5, 5, 12, 0.45)', border: '1px solid rgba(192, 38, 211, 0.15)', borderRadius: 'var(--radius-md)', boxShadow: isHovered ? '0 0 20px rgba(6, 182, 212, 0.12)' : 'none', borderColor: isHovered ? 'var(--accent-light)' : 'rgba(192, 38, 211, 0.15)', transition: 'all 0.3s ease', cursor: 'default', position: 'relative', overflow: 'hidden', }} className="lg:w-[310px] flex-shrink-0 flex flex-col justify-between h-[360px]">
             <div>
                 <div style={{ display: 'flex', alignItems: 'flex-start', justifyBetween: 'space-between', marginBottom: 14 }}>
                     <motion.div animate={{ color: isHovered ? 'var(--accent)' : 'rgba(255,255,255,0.1)' }} transition={{ duration: 0.3 }} style={{ fontFamily: 'var(--font-montserrat)', fontSize: '2.4rem', fontWeight: 900, lineHeight: 1 }}>
@@ -75,7 +75,7 @@ export default function Services() {
 
     if (isHorizontal) {
         return (
-            <section ref={sectionRef} className="relative w-full h-full flex flex-col items-center overflow-hidden py-10 px-16" style={{ backgroundColor: 'var(--bg-base)', borderTop: '1px solid var(--border-solid)' }}>
+            <section ref={sectionRef} className="relative w-full h-full flex flex-col items-center overflow-hidden py-10 px-16" style={{ backgroundColor: 'var(--bg-accent)', borderTop: '1px solid var(--border-solid)' }}>
                 <motion.div initial={{ opacity: 0, x: -30 }} animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }} transition={{ type: 'spring', stiffness: 80, damping: 18 }} className="relative z-10 w-full flex-shrink-0 flex flex-col items-center justify-center h-[40%] gap-4">
                     <p className="section-label" style={{ color: 'var(--accent-light)' }}>What I Offer</p>
                     <h2 style={{ fontFamily: 'var(--font-montserrat)', fontSize: 'clamp(2.4rem, 100vw, 3.6rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, color: 'var(--text-primary)', }}>
@@ -100,7 +100,7 @@ export default function Services() {
     }
 
     return (
-        <section ref={sectionRef} className="relative w-full py-24 px-6 overflow-hidden" style={{ backgroundColor: 'var(--bg-base)', borderTop: '1px solid var(--border-solid)' }}>
+        <section ref={sectionRef} className="relative w-full py-12 md:py-24 px-6 overflow-hidden" style={{ backgroundColor: 'var(--bg-accent)', borderTop: '1px solid var(--border-solid)' }}>
             <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 60% 50% at 80% 60%, rgba(192, 38, 211, 0.06) 0%, transparent 70%)', }} />
             <div className="relative z-10 max-w-7xl mx-auto">
                 <motion.div initial={{ opacity: 0, y: -24 }} animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -24 }} transition={{ type: 'spring', stiffness: 80, damping: 18 }} className="mb-16 space-y-4 max-w-xl">

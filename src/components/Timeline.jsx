@@ -58,7 +58,7 @@ function VerticalTimeline() {
     const headingInView = useInView(headingRef, { once: false, amount: 0.4 });
 
     return (
-        <div className="relative w-full overflow-hidden py-24 px-6" style={{ backgroundColor: 'var(--bg-base)', borderTop: '1px solid var(--border-solid)' }}>
+        <div className="relative w-full overflow-hidden py-24 px-6" style={{ backgroundColor: 'var(--bg-accent)', borderTop: '1px solid var(--border-solid)' }}>
             <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 60% 40% at 70% 30%, rgba(192, 38, 211, 0.04) 0%, transparent 70%)', }} />
             <motion.div ref={headingRef} initial={{ opacity: 0, y: -24 }} animate={headingInView ? { opacity: 1, y: 0 } : { opacity: 0, y: -24 }} transition={{ type: 'spring', stiffness: 80, damping: 18 }} className="relative z-10 text-center mb-20 max-w-2xl mx-auto">
                 <div className="flex justify-center mb-4">
@@ -116,7 +116,7 @@ function HorizontalTimeline() {
     const [headingRef, headingInView] = useHorizontalInView({ once: false, amount: 'some' });
 
     return (
-        <div className="relative w-full h-full flex items-center overflow-hidden py-10 px-16" style={{ background: 'linear-gradient(90deg, var(--bg-base) 0%, #09030F 100%)', borderTop: '1px solid var(--border-solid)' }}>
+        <div className="relative w-full h-full flex items-center overflow-hidden py-10 px-16" style={{ background: 'linear-gradient(90deg, var(--bg-accent) 0%, #09030F 100%)', borderTop: '1px solid var(--border-solid)' }}>
             <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 60% 40% at 75% 30%, rgba(192, 38, 211, 0.04) 0%, transparent 70%)', }} />
             <motion.div ref={headingRef} initial={{ opacity: 0, x: -30 }} animate={headingInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }} transition={{ type: 'spring', stiffness: 80, damping: 18 }} className="relative z-10 w-[350px] flex-shrink-0 flex flex-col justify-center pr-12 border-r border-[#16162a] h-[60%]">
                 <div className="flex mb-4">

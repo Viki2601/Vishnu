@@ -185,7 +185,7 @@ export default function Contact() {
     const [sectionRef, isInView] = useHorizontalInView({ once: false, amount: 'some' });
 
     return (
-        <section ref={sectionRef} className="relative w-full h-full min-h-screen flex items-center py-24 px-6 overflow-hidden" style={{ backgroundColor: 'var(--bg-base)', borderTop: '1px solid var(--border-solid)' }}>
+        <section ref={sectionRef} className="relative w-full h-full min-h-screen flex items-center py-24 px-6 overflow-hidden" style={{ backgroundColor: 'var(--bg-accent)', borderTop: '1px solid var(--border-solid)' }}>
             <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 100%, rgba(192, 38, 211, 0.05) 0%, transparent 70%)', }} />
 
             <motion.div variants={containerVariants} initial="hidden" animate={isInView ? 'visible' : 'hidden'} className="relative z-10 w-full max-w-7xl mx-auto">
