@@ -3,6 +3,8 @@ import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import LayoutClient from "./LayoutClient";
 
+const siteUrl = "https://vishnu-lake.vercel.app";
+
 const playfair = Playfair_Display({
   variable: "--font-playfair",
   subsets: ["latin"],
@@ -40,10 +42,11 @@ const raleway = Raleway({
 });
 
 export const metadata = {
-  title: "Vishnu Muthukumar — UI Developer",
+  metadataBase: new URL(siteUrl),
+  title: "Vishnu — Front-End Developer",
   keywords: [
     "Vishnu",
-    "Vishnu Muthukumar",
+    "Front-End Developer",
     "Web Developer",
     "Portfolio",
     "Next.js",
@@ -58,10 +61,34 @@ export const metadata = {
     "MERN Stack",
     "UI Developer",
   ],
-  authors: [{ name: "Vishnu Muthukumar", url: "https://vishnumuthukumar.com" }],
-  creator: "Vishnu Muthukumar",
-  description:
-    "UI Developer specializing in modern web experiences — React, Next.js, MERN stack.",
+  authors: [{ name: "Vishnu", url: "https://vishnu-lake.vercel.app/" }],
+  creator: "Vishnu",
+  alternates: {canonical: "/",},
+  openGraph: {
+    type: "website",
+    url: "/",
+    title: "Vishnu — Front-End Developer",
+    description: "Front-End Developer specializing in modern web experiences — React, Next.js, MERN stack.",
+    siteName: "Vishnu Muthukumar",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary",
+    title: "Vishnu — Front-End Developer",
+    description: "Front-End Developer specializing in modern web experiences — React, Next.js, MERN stack.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  description: "Front-End Developer specializing in modern web experiences — React, Next.js, MERN stack.",
 };
 
 export default function RootLayout({ children }) {

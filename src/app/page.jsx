@@ -10,8 +10,24 @@ import Services from "@/components/Services";
 import HorizontalScroll from "@/common/HorizontalScroll";
 
 export default function Home() {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Vishnu Muthukumar",
+    url: "https://vishnu-lake.vercel.app",
+    jobTitle: "Front-End Developer",
+    sameAs: [
+      "https://github.com/Viki2601",
+      "https://www.linkedin.com/in/vishnu-muthukumar-0b247021a/",
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <Cursor />
       <main>
         <HorizontalScroll revealLayer={<FooterName />}>
