@@ -57,7 +57,7 @@ export default function Landing() {
     if (!isClient) return null;
 
     return (
-        <div className="relative w-full min-h-screen overflow-hidden flex items-center" style={{ backgroundColor: 'var(--bg-base)' }}>
+        <div className="relative w-full min-h-screen overflow-hidden flex items-center font-jura" style={{ backgroundColor: 'var(--bg-base)' }}>
             <motion.video autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover pointer-events-none z-0" style={{ opacity: 0.16, x: smoothVideoX, y: smoothVideoY, scale: smoothVideoScale, }}>
                 <source src="/Space.mp4" type="video/mp4" />
             </motion.video>
@@ -72,32 +72,32 @@ export default function Landing() {
                 <div className="md:w-3/5 lg:w-1/2">
                     <motion.div variants={containerVariants} initial="hidden" animate="visible" className="flex flex-col gap-7">
                         <motion.div variants={itemVariants} style={{ opacity: smoothContentOpacity, x: smoothContentX }}>
-                            <span className="inline-flex items-center gap-2 px-4 py-1.5 text-xs font-bold tracking-widest uppercase" style={{ background: 'rgba(125, 42, 232, 0.08)', border: '1px solid rgba(125, 42, 232, 0.25)', borderRadius: 'var(--radius-sm)', color: 'var(--accent-light)', fontFamily: 'var(--font-montserrat)' }}>
+                            <span className="inline-flex items-center gap-2 px-4 py-1.5 text-xs font-bold tracking-widest uppercase" style={{ background: 'rgba(125, 42, 232, 0.08)', border: '1px solid rgba(125, 42, 232, 0.25)', borderRadius: 'var(--radius-sm)', color: 'var(--accent-light)' }}>
                                 <span className="w-2 h-2 rounded-full" style={{ background: '#00d9ff', boxShadow: '0 0 10px #00d9ff', animation: 'pulse-ring 2s infinite' }} />
                                 Open to Opportunities
                             </span>
                         </motion.div>
 
                         <motion.div variants={itemVariants}>
-                            <motion.h1 style={{ fontFamily: 'var(--font-montserrat)', fontSize: 'clamp(3.2rem, 8.5vw, 6rem)', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 0.95, color: 'var(--text-primary)', scale: smoothNameScale, opacity: smoothNameOpacity, y: smoothNameY, x: smoothNameX, transformOrigin: 'left center', display: 'block', }}>
+                            <motion.h1 style={{ fontSize: 'clamp(4.2rem, 8.5vw, 8rem)', fontWeight: 900, letterSpacing: '-0.04em', lineHeight: 0.95, color: 'var(--text-primary)', scale: smoothNameScale, opacity: smoothNameOpacity, y: smoothNameY, x: smoothNameX, transformOrigin: 'left center', display: 'block', }}>
                                 VISHNU<span style={{ color: 'var(--accent)', textShadow: '0 0 15px var(--accent)' }}>.</span>
                             </motion.h1>
 
-                            <motion.h2 style={{ fontFamily: 'var(--font-montserrat)', fontSize: 'clamp(1.5rem, 4.2vw, 2.6rem)', fontWeight: 400, letterSpacing: '-0.02em', color: 'var(--text-secondary)', marginTop: '12px', scale: smoothSubTitleScale, x: smoothSubtitleX, y: smoothSubtitleY, display: 'block', }}>
+                            <motion.h2 style={{ fontSize: 'clamp(1.5rem, 4.2vw, 2.6rem)', fontWeight: 400, letterSpacing: '-0.02em', color: 'var(--text-secondary)', marginTop: '12px', scale: smoothSubTitleScale, x: smoothSubtitleX, y: smoothSubtitleY, display: 'block', }}>
                                 Front-End Developer
                             </motion.h2>
                         </motion.div>
 
                         <motion.div variants={itemVariants} className="w-24 h-[2px]" style={{ background: 'linear-gradient(90deg, var(--accent), var(--accent-light))', boxShadow: '0 0 8px var(--accent)', opacity: smoothContentOpacity, }} />
-                        <motion.p variants={itemVariants} className="text-base md:text-lg max-w-md" style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-sans)', lineHeight: 1.75, opacity: smoothContentOpacity, x: smoothContentX, }}>
+                        <motion.p variants={itemVariants} className="text-base md:text-lg max-w-md" style={{ color: 'var(--text-secondary)', lineHeight: 1.75, opacity: smoothContentOpacity, x: smoothContentX, }}>
                              Front-End Developer with hands-on experience building high-performance web experiences across the MERN stack. Currently pursuing BCA (Distance) at University of Madras — actively looking for full-time opportunities.
                         </motion.p>
 
                         <motion.div variants={itemVariants} className="flex flex-wrap gap-4" style={{ opacity: smoothContentOpacity, x: smoothContentX }}>
-                            <motion.button whileHover={{ opacity: 0.95, y: -2, boxShadow: '0 0 25px rgba(125,42,232,0.5)' }} whileTap={{ scale: 0.97 }} onClick={() => scrollToPanel('#projects')} style={{ padding: '12px 30px', background: 'linear-gradient(135deg, var(--accent), var(--accent2))', color: '#fff', border: 'none', borderRadius: '100px', fontFamily: 'var(--font-montserrat)', fontSize: '0.82rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', cursor: 'pointer' }}>
+                            <motion.button whileHover={{ opacity: 0.95, y: -2, boxShadow: '0 0 25px rgba(125,42,232,0.5)' }} whileTap={{ scale: 0.97 }} onClick={() => scrollToPanel('#projects')} style={{ padding: '12px 30px', background: 'linear-gradient(135deg, var(--accent), var(--accent2))', color: '#fff', border: 'none', borderRadius: '100px', fontSize: '0.82rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', cursor: 'pointer' }}>
                                 View Projects
                             </motion.button>
-                            <motion.button whileHover={{ borderColor: 'rgba(125,42,232,0.5)', background: 'rgba(125,42,232,0.04)', boxShadow: '0 0 15px rgba(125,42,232,0.1)' }} whileTap={{ scale: 0.97 }} onClick={() => scrollToPanel('#contact')} style={{ padding: '12px 30px', background: 'transparent', color: 'var(--text-primary)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '100px', fontFamily: 'var(--font-montserrat)', fontSize: '0.82rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', cursor: 'pointer', transition: 'border-color 0.2s, background 0.2s' }}>
+                            <motion.button whileHover={{ borderColor: 'rgba(125,42,232,0.5)', background: 'rgba(125,42,232,0.04)', boxShadow: '0 0 15px rgba(125,42,232,0.1)' }} whileTap={{ scale: 0.97 }} onClick={() => scrollToPanel('#contact')} style={{ padding: '12px 30px', background: 'transparent', color: 'var(--text-primary)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: '100px', fontSize: '0.82rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', cursor: 'pointer', transition: 'border-color 0.2s, background 0.2s' }}>
                                 Get In Touch
                             </motion.button>
                         </motion.div>
@@ -106,7 +106,7 @@ export default function Landing() {
             </motion.div>
 
             <motion.div animate={isHorizontal ? { x: [0, 8, 0] } : { y: [0, 8, 0] }} transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }} className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-20" style={{ color: 'var(--text-muted)', opacity: smoothContentOpacity }}>
-                <span style={{ fontFamily: 'var(--font-montserrat)', fontSize: '0.65rem', fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase' }}>
+                <span style={{ fontSize: '0.65rem', fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase' }}>
                     Scroll
                 </span>
                 {isHorizontal ? (

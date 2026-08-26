@@ -36,10 +36,10 @@ export default function About() {
                     <motion.div initial={{ opacity: 0, x: -40 }} animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -40 }} transition={{ type: 'spring', stiffness: 70, damping: 18 }} className="space-y-6">
                         <p className="section-label" style={{ color: 'var(--accent-light)' }}>About Me</p>
                         <div>
-                            <RevealText text="I build things for the web." style={{ fontFamily: 'var(--font-montserrat)', fontSize: 'clamp(2.8rem, 6vw, 4.8rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.05, color: 'var(--text-primary)', }} delay={0.1} />
+                            <RevealText text="I build things for the web." style={{ fontSize: 'clamp(2.8rem, 6vw, 4.8rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.05, color: 'var(--text-primary)', }} delay={0.1} />
                         </div>
                         <div className="w-20 h-[2px]" style={{ background: 'linear-gradient(90deg, var(--accent-light), transparent)' }} />
-                        <motion.p initial={{ opacity: 0 }} animate={isInView ? { opacity: 1 } : {}} transition={{ delay: 0.5, duration: 0.6 }} style={{ color: 'var(--text-secondary)', lineHeight: 1.8, fontFamily: 'var(--font-sans)' }}>
+                        <motion.p initial={{ opacity: 0 }} animate={isInView ? { opacity: 1 } : {}} transition={{ delay: 0.5, duration: 0.6 }} style={{ color: 'var(--text-secondary)', lineHeight: 1.8, }}>
                             Mechanical Engineering graduate who pivoted into software engineering. After comprehensive training at{' '}
                             <span style={{ color: 'var(--accent-light)', fontWeight: 600 }}>QSpiders Institute</span>, I spent over two years as a Lead <span style={{ color: 'var(--accent-light)', fontWeight: 600 }}>Frontend Developer</span> at <span style={{ color: 'var(--accent-light)', fontWeight: 600 }}>MAI Corporation</span>, crafting highly interactive UI experiences across the MERN stack. Currently pursuing a <span style={{ color: 'var(--accent-light)', fontWeight: 600 }}>Bachelor of Computer Applications (BCA)</span> at the <span style={{ color: 'var(--accent-light)', fontWeight: 600 }}>University of Madras</span> and actively looking for full-time opportunities.
                         </motion.p>
@@ -47,7 +47,7 @@ export default function About() {
 
                     <motion.div variants={containerVariants} initial="hidden" animate={isInView ? 'visible' : 'hidden'} className="space-y-4">
                         <motion.div variants={itemVariants} className="glass p-4 md:p-8" style={{ borderRadius: 'var(--radius-md)', border: '1px solid rgba(192, 38, 211, 0.15)', boxShadow: 'inset 0 1px 0 rgba(192, 38, 211, 0.05)', background: 'rgba(5, 5, 12, 0.45)' }}>
-                            <p style={{ color: 'var(--text-secondary)', lineHeight: 1.85, fontFamily: 'var(--font-sans)' }}>
+                            <p style={{ color: 'var(--text-secondary)', lineHeight: 1.85,}}>
                                 I'm{' '}
                                 <span style={{ color: 'var(--text-primary)', fontWeight: 700 }}>Vishnu Muthukumar</span>
                                 , I'm Vishnu Muthukumar, a frontend-focused developer bridging engineering rigor and pixel-perfect design. I've led frontend development with  <span style={{ color: 'var(--accent-light)', fontWeight: 600 }}>Next.js, React.js, and React Native, building mobile-first UI experiences across Shopify, Zoho, and web/app products</span>, ensuring clean code and immersive transitions.
@@ -59,10 +59,10 @@ export default function About() {
                                 <motion.div key={stat?.label} variants={itemVariants} className="flex items-center gap-3 px-4 py-3" style={{ background: 'rgba(5, 5, 12, 0.35)', border: '1px solid var(--border-solid)', borderRadius: 'var(--radius-sm)', transition: 'all 0.3s ease' }} whileHover={{ borderColor: stat.color, boxShadow: `0 0 15px ${stat.color}25`, background: 'rgba(5, 5, 12, 0.55)' }}>
                                     <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: stat?.color, boxShadow: `0 0 10px ${stat?.color}` }} />
                                     <div>
-                                        <p style={{ fontFamily: 'var(--font-montserrat)', fontSize: '0.62rem', fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
+                                        <p style={{ fontSize: '0.62rem', fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
                                             {stat?.label}
                                         </p>
-                                        <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.85rem', fontWeight: 700, color: stat?.color }}>
+                                        <p style={{ fontSize: '0.85rem', fontWeight: 700, color: stat?.color }}>
                                             {stat?.value}
                                         </p>
                                     </div>

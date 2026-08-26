@@ -69,6 +69,72 @@ html {
   html {
     scroll-behavior: smooth;
   }
+
+  .project-section {
+    width: 100% !important;
+    min-height: 100svh;
+  }
+
+  .project-header {
+    align-items: flex-start;
+    padding: 4rem 1.25rem 2rem;
+    gap: 1.5rem;
+  }
+
+  .project-header h2 {
+    font-size: clamp(2rem, 11vw, 3rem) !important;
+    line-height: 1.05;
+  }
+
+  .project-header > div:last-child {
+    width: 100%;
+  }
+
+  .project-content {
+    flex: none;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 0 1.25rem 3rem;
+    overflow: visible;
+  }
+
+  .project-list {
+    width: 100% !important;
+    max-height: 15rem;
+    padding-right: 0;
+  }
+
+  .project-preview {
+    width: 100%;
+    max-width: none !important;
+    min-height: 5rem;
+    aspect-ratio: 1.2;
+    flex: none;
+  }
+
+  .project-details {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.25rem;
+  }
+
+  .project-description {
+    max-width: 100% !important;
+  }
+
+  .project-description h3 {
+    font-size: 1.5rem !important;
+  }
+
+  .project-description p {
+    font-size: 0.8rem !important;
+  }
+
+  .project-details > a {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 body {

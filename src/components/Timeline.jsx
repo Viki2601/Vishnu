@@ -9,26 +9,26 @@ function TimelineCard({ item }) {
     return (
         <motion.div className="p-5 space-y-2.5 cursor-default w-full text-left" style={{ borderRadius: 'var(--radius-md)', background: 'rgba(5, 5, 12, 0.45)', border: '1px solid rgba(192, 38, 211, 0.15)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.03)', transition: 'all 0.3s ease' }} whileHover={{ scale: 1.025, borderColor: 'var(--accent-light)', boxShadow: '0 0 20px rgba(6, 182, 212, 0.15), inset 0 1px 0 rgba(6, 182, 212, 0.05)' }} transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
             <div className="flex items-center justify-between flex-wrap gap-2">
-                <span style={{ display: 'inline-block', fontFamily: 'var(--font-montserrat)', fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '3px 10px', background: 'rgba(6, 182, 212, 0.08)', color: 'var(--accent-light)', border: '1px solid rgba(6, 182, 212, 0.2)', borderRadius: 'var(--radius-sm)', }}>
+                <span style={{ display: 'inline-block',  fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '3px 10px', background: 'rgba(6, 182, 212, 0.08)', color: 'var(--accent-light)', border: '1px solid rgba(6, 182, 212, 0.2)', borderRadius: 'var(--radius-sm)', }}>
                     {item?.date}
                 </span>
                 {item?.current && (
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontFamily: 'var(--font-montserrat)', fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.08em', color: '#4ade80' }}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4,fontSize: '0.6rem', fontWeight: 700, letterSpacing: '0.08em', color: '#4ade80' }}>
                         <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#4ade80', boxShadow: '0 0 8px #4ade80', display: 'inline-block' }} />
                         Current
                     </span>
                 )}
             </div>
 
-            <h3 style={{ fontFamily: 'var(--font-montserrat)', fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.01em', lineHeight: 1.3 }}>
+            <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: 'var(--text-primary)', letterSpacing: '-0.01em', lineHeight: 1.3 }}>
                 {item?.title}
             </h3>
 
-            <p style={{ fontFamily: 'var(--font-montserrat)', fontSize: '0.72rem', fontWeight: 600, color: 'var(--accent)', letterSpacing: '0.04em' }}>
+            <p style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--accent)', letterSpacing: '0.04em' }}>
                 {item?.company}
             </p>
 
-            <p style={{ fontFamily: 'var(--font-sans)', fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.6 }} className="line-clamp-4 hover:line-clamp-none transition-all duration-300">
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.6 }} className="line-clamp-4 hover:line-clamp-none transition-all duration-300">
                 {item?.description}
             </p>
         </motion.div>
@@ -64,7 +64,7 @@ function VerticalTimeline() {
                 <div className="flex justify-center mb-4">
                     <p className="section-label" style={{ color: 'var(--accent-light)' }}>My Journey</p>
                 </div>
-                <h2 style={{ fontFamily: 'var(--font-montserrat)', fontSize: 'clamp(2.8rem, 6vw, 4.8rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.05, color: 'var(--text-primary)', }}>
+                <h2 style={{ fontSize: 'clamp(2.8rem, 6vw, 4.8rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.05, color: 'var(--text-primary)', }}>
                     Experience &amp;{' '}
                     <span className="gradient-text font-bold" style={{ textShadow: '0 0 15px rgba(192,38,211,0.1)' }}>Education</span>
                 </h2>
@@ -122,7 +122,7 @@ function HorizontalTimeline() {
                 <div className="flex mb-4">
                     <p className="section-label" style={{ color: 'var(--accent-light)' }}>My Journey</p>
                 </div>
-                <h2 style={{ fontFamily: 'var(--font-montserrat)', fontSize: 'clamp(2.4rem, 4vw, 3.6rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, color: 'var(--text-primary)', }}>
+                <h2 style={{ fontSize: 'clamp(2.4rem, 4vw, 3.6rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, color: 'var(--text-primary)', }}>
                     Experience &amp; <br />
                     <span className="gradient-text font-bold" style={{ textShadow: '0 0 15px rgba(192,38,211,0.1)' }}>Education</span>
                 </h2>
@@ -142,6 +142,5 @@ function HorizontalTimeline() {
 
 export default function Timeline() {
     const { isHorizontal } = useHorizontalScroll();
-
     return isHorizontal ? <HorizontalTimeline /> : <VerticalTimeline />;
 }
