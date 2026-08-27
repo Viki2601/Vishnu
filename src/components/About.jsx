@@ -50,7 +50,7 @@ export default function About() {
                             <p style={{ color: 'var(--text-secondary)', lineHeight: 1.85,}}>
                                 I'm{' '}
                                 <span style={{ color: 'var(--text-primary)', fontWeight: 700 }}>Vishnu Muthukumar</span>
-                                , I'm Vishnu Muthukumar, a frontend-focused developer bridging engineering rigor and pixel-perfect design. I've led frontend development with  <span style={{ color: 'var(--accent-light)', fontWeight: 600 }}>Next.js, React.js, and React Native, building mobile-first UI experiences across Shopify, Zoho, and web/app products</span>, ensuring clean code and immersive transitions.
+                                , a frontend-focused developer bridging engineering rigor and pixel-perfect design. I've led frontend development with  <span style={{ color: 'var(--accent-light)', fontWeight: 600 }}>Next.js, React.js, and React Native, building mobile-first UI experiences across Shopify, Zoho, and web/app products</span>, ensuring clean code and immersive transitions.
                             </p>
                         </motion.div>
 
